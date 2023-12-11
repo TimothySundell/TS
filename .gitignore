@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # History files
 .Rhistory
 .Rapp.history
@@ -47,3 +48,12 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+=======
+.Rproj.user
+docs
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
+>>>>>>> 60570e1 (Initial commit)

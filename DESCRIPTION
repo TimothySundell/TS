@@ -1,0 +1,16 @@
+Package: TS
+Title: Functions for a better life.
+Version: 1.0
+Authors@R: 
+    person(given = "Timothy",
+           family = "Sundell",
+           role = c("aut", "cre"),
+           email = "timothy.sundell@gu.se",
+           comment = c(ORCID = "https://orcid.org/0000-0001-6244-1790"))
+Depends: magrittr
+Description: A collection of functions from TS, for TS.
+License: `use_mit_license()`
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
