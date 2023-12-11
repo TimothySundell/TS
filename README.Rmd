@@ -1,0 +1,38 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# TS
+
+<!-- badges: start -->
+`r badger::badge_lifecycle("stable")`
+`r badger::badge_repostatus("Active")`
+`r badger::badge_code_size("TimothySundell/TS")`
+`r badger::badge_github_actions("TimothySundell/TS")`
+`r badger::badge_doi("10.1093/bfgp/elac044", "green")`
+<!-- badges: end -->
+
+TS was written to improve the quality of life for its creator, maybe it can help you as well?
+
+## Installation
+
+You can install the development version of TS like so:
+
+``` r
+devtools::install_github(TimothySundell/TS)
+```
+
+## Comments from the author
+
+My plan is to keep this repository updated as much as possible. If something is not working, please post in the Issue section.
