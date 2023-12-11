@@ -13,6 +13,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![R build
 status](https://github.com/TimothySundell/TS/workflows/R-CMD-check/badge.svg)](https://github.com/TimothySundell/TS/actions)
 [![](https://img.shields.io/badge/doi-10.1093/bfgp/elac044-green.svg)](https://doi.org/10.1093/bfgp/elac044)
+[![R-CMD-check](https://github.com/TimothySundell/TS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/TimothySundell/TS/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 TS was written to improve the quality of life for its creator, maybe it

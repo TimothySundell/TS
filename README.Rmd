@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
 `r badger::badge_code_size("TimothySundell/TS")`
 `r badger::badge_github_actions("TimothySundell/TS")`
 `r badger::badge_doi("10.1093/bfgp/elac044", "green")`
+[![R-CMD-check](https://github.com/TimothySundell/TS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/TimothySundell/TS/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 TS was written to improve the quality of life for its creator, maybe it can help you as well?
