@@ -13,22 +13,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-# TS
+# TS - A collection of QoL functions
 
 <!-- badges: start -->
 `r badger::badge_lifecycle("stable")`
 `r badger::badge_repostatus("Active")`
 `r badger::badge_code_size("TimothySundell/TS")`
-`r badger::badge_github_actions("TimothySundell/TS")`
 `r badger::badge_doi("10.1093/bfgp/elac044", "green")`
-[![R-CMD-check](https://github.com/TimothySundell/TS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/TimothySundell/TS/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
 TS was written to improve the quality of life for its creator, maybe it can help you as well?
 
+It contains a collection of functions that may be relevant people analysing single-cell RNA-sequencing data, and analysing Ig(BCR)/TCR-sequences. 
+
+Please give our methods paper a look at the *DOI* button above.
+It shows the importance of removing BCR/TCR genes prior to performing unsupervised clustering and downstream analyses of  scRNA-seq data containing lymphocytes.
+
+
 ## Installation
 
-You can install the development version of TS like so:
+To install the latest version of the TS package:
 
 ``` r
 devtools::install_github(TimothySundell/TS)
@@ -36,4 +41,5 @@ devtools::install_github(TimothySundell/TS)
 
 ## Comments from the author
 
-My plan is to keep this repository updated as much as possible. If something is not working, please post in the Issue section.
+My plan is to keep this repository updated as much as possible. 
+If something is not working, please post in the Issue section.
