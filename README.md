@@ -21,10 +21,12 @@ It contains a collection of functions that may be relevant people
 analysing single-cell RNA-sequencing data, and analysing
 Ig(BCR)/TCR-sequences.
 
-Please give our methods paper a look at the *DOI* button above. It shows
-the importance of removing BCR/TCR genes prior to performing
+**Please** give our method article a look at the **DOI** button above.
+It shows the importance of removing BCR/TCR genes prior to performing
 unsupervised clustering and downstream analyses of scRNA-seq data
 containing lymphocytes.
+
+------------------------------------------------------------------------
 
 ## Installation
 
@@ -34,7 +36,13 @@ To install the latest version of the TS package:
 devtools::install_github(TimothySundell/TS)
 ```
 
+------------------------------------------------------------------------
+
 ## Comments from the author
 
 My plan is to keep this repository updated as much as possible. If
-something is not working, please post in the Issue section.
+something is not working, please post in the *Issues* section.
+
+As of now, the package does not pass *R CMD CHECK* as the tidyverse way
+of coding leaves me a lot of unlinked global variables to reference.
+Will maybe be fixed in the future.
