@@ -58,18 +58,21 @@
 <!-- badges: end -->
 <p>TS was written to improve the quality of life for its creator, maybe it can help you as well?</p>
 <p>It contains a collection of functions that may be relevant people analysing single-cell RNA-sequencing data, and analysing Ig(BCR)/TCR-sequences.</p>
-<p>Please give our methods paper a look at the <em>DOI</em> button above. It shows the importance of removing BCR/TCR genes prior to performing unsupervised clustering and downstream analyses of scRNA-seq data containing lymphocytes.</p>
+<p><strong>Please</strong> give our method article a look at the <strong>DOI</strong> button above. It shows the importance of removing BCR/TCR genes prior to performing unsupervised clustering and downstream analyses of scRNA-seq data containing lymphocytes.</p>
+<hr>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>To install the latest version of the TS package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="va">TimothySundell</span><span class="op">/</span><span class="va">TS</span><span class="op">)</span></span></code></pre></div>
+<hr>
 </div>
 <div class="section level2">
 <h2 id="comments-from-the-author">Comments from the author<a class="anchor" aria-label="anchor" href="#comments-from-the-author"></a>
 </h2>
-<p>My plan is to keep this repository updated as much as possible. If something is not working, please post in the Issue section.</p>
+<p>My plan is to keep this repository updated as much as possible. If something is not working, please post in the <em>Issues</em> section.</p>
+<p>As of now, the package does not pass <em>R CMD CHECK</em> as the tidyverse way of coding leaves me a lot of unlinked global variables to reference. Will maybe be fixed in the future.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
