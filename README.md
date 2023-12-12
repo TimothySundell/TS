@@ -52,7 +52,7 @@ Will maybe be fixed in the future.
 
 ------------------------------------------------------------------------
 
-## The TS collection of functions can be divided into XX groups:
+## The TS collection of functions can be divided into 4 main categories:
 
 ### Functions for plotting figures
 
