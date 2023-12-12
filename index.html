@@ -55,10 +55,10 @@
 </h1></div>
 <!-- badges: start -->
 
-<!-- badges: end -->
 <p>TS was written to improve the quality of life for its creator, maybe it can help you as well?</p>
 <p>It contains a collection of functions that may be relevant people analysing single-cell RNA-sequencing data, and analysing Ig(BCR)/TCR-sequences.</p>
 <p><strong>Please</strong> give our method article a look at the <strong>DOI</strong> button above. It shows the importance of removing BCR/TCR genes prior to performing unsupervised clustering and downstream analyses of scRNA-seq data containing lymphocytes.</p>
+<p>You can find a reference webpage <a href="https://timothysundell.github.io/TS/"><em>here</em></a>, or under the <em>About</em> section in the top right corner of this webpage.</p>
 <hr>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -73,6 +73,67 @@
 </h2>
 <p>My plan is to keep this repository updated as much as possible. If something is not working, please post in the <em>Issues</em> section.</p>
 <p>As of now, the package does not pass <em>R CMD CHECK</em> as the tidyverse way of coding leaves me a lot of unlinked global variables to reference. Will maybe be fixed in the future.</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="the-ts-collection-of-functions-can-be-divided-into-xx-groups">The TS collection of functions can be divided into XX groups:<a class="anchor" aria-label="anchor" href="#the-ts-collection-of-functions-can-be-divided-into-xx-groups"></a>
+</h2>
+<div class="section level3">
+<h3 id="functions-for-plotting-figures">Functions for plotting figures<a class="anchor" aria-label="anchor" href="#functions-for-plotting-figures"></a>
+</h3>
+<ul>
+<li>TS_DEenrichRPlot</li>
+<li>TS_featureplot_to_pdf</li>
+<li>TS_featureplot_to_pdf_A4</li>
+<li>TS_featureplot_to_pdf_no_leg_no_axes</li>
+<li>TS_featureplots</li>
+<li>TS_plot_3D</li>
+<li>TS_plot_counts_boxplot</li>
+<li>TS_plot_counts_violin</li>
+<li>TS_plot_enrichR</li>
+<li>TS_project_scRNAseq_dataset</li>
+<li>TS_svg_from_featureplot</li>
+<li>TS_svg_from_plot</li>
+<li>TS_visdimloadings</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="functions-for-analysing-sc-vdj-sequencing-data">Functions for analysing sc-V(D)J-sequencing data<a class="anchor" aria-label="anchor" href="#functions-for-analysing-sc-vdj-sequencing-data"></a>
+</h3>
+<ul>
+<li>TS_IGHV_usage_prop_with_stats</li>
+<li>TS_calculate_ratios</li>
+<li>TS_count_VDJ</li>
+<li>TS_count_VDJ_7.0</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="functions-for-analysing-scrna-seq-data">Functions for analysing scRNA-seq data<a class="anchor" aria-label="anchor" href="#functions-for-analysing-scrna-seq-data"></a>
+</h3>
+<ul>
+<li>TS_FindConservedMarkers</li>
+<li>TS_FindConservedMarkers</li>
+<li>TS_Find_DEGS_and_overlap</li>
+<li>TS_cellnumbers_per_PC_and_resolution</li>
+<li>TS_compare_PC_and_resolution</li>
+<li>TS_export_cluster_ids</li>
+<li>TS_export_named_ids</li>
+<li>TS_extract_ig_mean_median_rank_per_PC</li>
+<li>TS_extract_ig_ranks_per_PC</li>
+<li>TS_extract_ranked_genes_per_PC</li>
+<li>TS_filter_marker_list</li>
+<li>TS_project_scRNAseq_dataset_export_query</li>
+<li>TS_run_enrichR</li>
+<li>TS_seurat_object_stats</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="general-data-wrangling">General data-wrangling<a class="anchor" aria-label="anchor" href="#general-data-wrangling"></a>
+</h3>
+<ul>
+<li>TS_dataframe_to_fasta</li>
+</ul>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
