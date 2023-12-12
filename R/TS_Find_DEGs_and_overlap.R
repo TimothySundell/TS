@@ -14,20 +14,19 @@
 #'
 #'  Automatically filters resulting DEG list so that '0 < p_val_adj > 0.05.
 #'
-#'  @param seurat_object Your Seurat object
-#'  @param ident.1 Name of cluster 1
-#'  @param ident.2 Name of cluster 2
-#'  @param grouping_variable_name Name of the combined group. Could be anything. Defaults to 'tested_population'.
-#'  @param only_pos_markers Whether to only return positively upregulated markers for the specific cluster. Defaults to 'TRUE'
-#'  @param test_use Statistical test used for DE testing. Defaults to 'Wilcoxon ranked sum test'.
-#'  @param plot_venn Whether to plot a Venn diagram for the gene lists. Defaults to 'FALSE'
-#'  @param export_venn Whether to export the Venn diagram to working directory. Defaults to 'FALSE'
-#'  @param filename_pdf File name for exported Venn diagram.
-#'  @param width  Width of saved Venn diagram. Defaults to '8.27 inches', which is A5  landscape format.
-#'  @param height Height of saved Venn diagram. Defaults to '5.83 inches', which is A5 landscape format.
-#'  @export
-#'  @importFrom magrittr  %>%
-
+#' @param seurat_object Your Seurat object
+#' @param ident.1 Name of cluster 1
+#' @param ident.2 Name of cluster 2
+#' @param grouping_variable_name Name of the combined group. Could be anything. Defaults to 'tested_population'.
+#' @param only_pos_markers Whether to only return positively upregulated markers for the specific cluster. Defaults to 'TRUE'
+#' @param test_use Statistical test used for DE testing. Defaults to 'Wilcoxon ranked sum test'.
+#' @param plot_venn Whether to plot a Venn diagram for the gene lists. Defaults to 'FALSE'
+#' @param export_venn Whether to export the Venn diagram to working directory. Defaults to 'FALSE'
+#' @param filename_pdf File name for exported Venn diagram.
+#' @param width  Width of saved Venn diagram. Defaults to '8.27 inches', which is A5  landscape format.
+#' @param height Height of saved Venn diagram. Defaults to '5.83 inches', which is A5 landscape format.
+#' @importFrom magrittr  %>%
+#' @export
 TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_variable_name = "tested_population", only_pos_markers = T, test_use = "wilcox", plot_venn = F, export_venn = F, filename_pdf = "Venn_output", width = 8.27, heigth = 5.83){
 
   library(Seurat)

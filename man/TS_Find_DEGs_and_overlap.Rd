@@ -18,6 +18,29 @@ TS_Find_DEGs_and_overlap(
   heigth = 5.83
 )
 }
+\arguments{
+\item{seurat_object}{Your Seurat object}
+
+\item{ident.1}{Name of cluster 1}
+
+\item{ident.2}{Name of cluster 2}
+
+\item{grouping_variable_name}{Name of the combined group. Could be anything. Defaults to 'tested_population'.}
+
+\item{only_pos_markers}{Whether to only return positively upregulated markers for the specific cluster. Defaults to 'TRUE'}
+
+\item{test_use}{Statistical test used for DE testing. Defaults to 'Wilcoxon ranked sum test'.}
+
+\item{plot_venn}{Whether to plot a Venn diagram for the gene lists. Defaults to 'FALSE'}
+
+\item{export_venn}{Whether to export the Venn diagram to working directory. Defaults to 'FALSE'}
+
+\item{filename_pdf}{File name for exported Venn diagram.}
+
+\item{width}{Width of saved Venn diagram. Defaults to '8.27 inches', which is A5  landscape format.}
+
+\item{height}{Height of saved Venn diagram. Defaults to '5.83 inches', which is A5 landscape format.}
+}
 \description{
 Returns a list containing:
 \itemize{
@@ -35,18 +58,4 @@ Depends on:
 }
 
 Automatically filters resulting DEG list so that '0 < p_val_adj > 0.05.
-
-@param seurat_object Your Seurat object
-@param ident.1 Name of cluster 1
-@param ident.2 Name of cluster 2
-@param grouping_variable_name Name of the combined group. Could be anything. Defaults to 'tested_population'.
-@param only_pos_markers Whether to only return positively upregulated markers for the specific cluster. Defaults to 'TRUE'
-@param test_use Statistical test used for DE testing. Defaults to 'Wilcoxon ranked sum test'.
-@param plot_venn Whether to plot a Venn diagram for the gene lists. Defaults to 'FALSE'
-@param export_venn Whether to export the Venn diagram to working directory. Defaults to 'FALSE'
-@param filename_pdf File name for exported Venn diagram.
-@param width  Width of saved Venn diagram. Defaults to '8.27 inches', which is A5  landscape format.
-@param height Height of saved Venn diagram. Defaults to '5.83 inches', which is A5 landscape format.
-@importFrom magrittr  \%>\%
-@export
 }
