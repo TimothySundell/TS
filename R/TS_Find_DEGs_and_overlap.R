@@ -25,8 +25,8 @@
 #'  @param filename_pdf File name for exported Venn diagram.
 #'  @param width  Width of saved Venn diagram. Defaults to '8.27 inches', which is A5  landscape format.
 #'  @param height Height of saved Venn diagram. Defaults to '5.83 inches', which is A5 landscape format.
-#'  @importFrom magrittr  %>%
 #'  @export
+#'  @importFrom magrittr  %>%
 
 TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_variable_name = "tested_population", only_pos_markers = T, test_use = "wilcox", plot_venn = F, export_venn = F, filename_pdf = "Venn_output", width = 8.27, heigth = 5.83){
 
