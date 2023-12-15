@@ -26,8 +26,8 @@ TS_project_scRNAseq_dataset_export_query <- function(reference_object, query_obj
   if(plot_3D) {
     cat(paste0("\nProjection based on dimensions ", deparse(dims), " of the reference PCA\n"))
 
-    DefaultAssay(reference_object) <- reference_object_assay #this has already corrected cc genes
-    DefaultAssay(query_object) <- query_object_assay #this has already corrected cc genes
+    DefaultAssay(reference_object) <- reference_object_assay
+    DefaultAssay(query_object) <- query_object_assay
 
     ref <- Seurat::RunUMAP(reference_object, dims = dims, reduction = "pca", return.model = T, n.components = 3)
     anchors <- Seurat::FindTransferAnchors(reference = ref, query = query_object, dims = dims, reference.reduction = "pca")
@@ -39,8 +39,8 @@ TS_project_scRNAseq_dataset_export_query <- function(reference_object, query_obj
   else{
     cat(paste0("\nProjection based on dimensions ", deparse(dims), " of the reference PCA\n"))
 
-    DefaultAssay(reference_object) <- reference_object_assay #this has already corrected cc genes
-    DefaultAssay(query_object) <- query_object_assay #this has already corrected cc genes
+    DefaultAssay(reference_object) <- reference_object_assay
+    DefaultAssay(query_object) <- query_object_assay
 
     ref <- Seurat::RunUMAP(reference_object, dims = dims, reduction = "pca", return.model = T)
     anchors <- Seurat::FindTransferAnchors(reference = ref, query = query_object, dims = dims, reference.reduction = "pca")
