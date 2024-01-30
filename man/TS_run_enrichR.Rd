@@ -28,6 +28,7 @@ Depends on
 \itemize{
 \item A live Internet connection
 \item magrittr
+\item dplyr
 Returns a list of the results of each database tested for.
 }
 }

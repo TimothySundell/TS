@@ -27,28 +27,19 @@ TS_plot_enrichR <- function(input, sort_on = "neg_log10", n = 10){
         dplyr::mutate(
           Class = "BP",
           neg_log10 = -log10(Adjusted.P.value)) %>%
-        dplyr::arrange(dplyr::desc(neg_log10)) %>%
-        tidyr::separate_wider_regex(
-          cols = Term,
-          patterns = c(Term = ".*", "\\ ", 'GO_ID' = "\\(.*")), # Could also have used mutate(bla = strsub(string, start, end), ...) as the GO:ID values are always the same length
+        dplyr::arrange(dplyr::desc(neg_log10)),
 
       input$GO_Molecular_Function_2023 %>%
         dplyr::mutate(
           Class = "MF",
           neg_log10 = -log10(Adjusted.P.value)) %>%
-        dplyr::arrange(dplyr::desc(neg_log10)) %>%
-        tidyr::separate_wider_regex(
-          cols = Term,
-          patterns = c(Term = ".*", "\\ ", 'GO_ID' = "\\(.*")),
+        dplyr::arrange(dplyr::desc(neg_log10)),
 
       input$GO_Cellular_Component_2023 %>%
         dplyr::mutate(
           Class = "CC",
           neg_log10 = -log10(Adjusted.P.value)) %>%
-        dplyr::arrange(dplyr::desc(neg_log10)) %>%
-        tidyr::separate_wider_regex(
-          cols = Term,
-          patterns = c(Term = ".*", "\\ ", 'GO_ID' = "\\(.*"))) %>%
+        dplyr::arrange(dplyr::desc(neg_log10))) %>%
 
       dplyr::mutate(Class = factor(Class, levels = c("BP", "MF", "CC"))) %>%
       tidyr::separate_wider_delim(cols = Genes, delim = ";", names_sep = "", too_few = "align_start") %>%
@@ -78,28 +69,19 @@ TS_plot_enrichR <- function(input, sort_on = "neg_log10", n = 10){
         dplyr::mutate(
           Class = "BP",
           neg_log10 = -log10(Adjusted.P.value)) %>%
-        dplyr::arrange(desc(Combined.Score)) %>%
-        tidyr::separate_wider_regex(
-          cols = Term,
-          patterns = c(Term = ".*", "\\ ", 'GO_ID' = "\\(.*")), # Could also have used dplyr::mutate(bla = strsub(string, start, end), ...) as the GO:ID values are always the same length
+        dplyr::arrange(desc(Combined.Score)),
 
       input$GO_Molecular_Function_2023 %>%
         dplyr::mutate(
           Class = "MF",
           neg_log10 = -log10(Adjusted.P.value)) %>%
-        dplyr::arrange(desc(Combined.Score)) %>%
-        tidyr::separate_wider_regex(
-          cols = Term,
-          patterns = c(Term = ".*", "\\ ", 'GO_ID' = "\\(.*")),
+        dplyr::arrange(desc(Combined.Score)),
 
       input$GO_Cellular_Component_2023 %>%
         dplyr::mutate(
           Class = "CC",
           neg_log10 = -log10(Adjusted.P.value)) %>%
-        dplyr::arrange(desc(Combined.Score)) %>%
-        tidyr::separate_wider_regex(
-          cols = Term,
-          patterns = c(Term = ".*", "\\ ", 'GO_ID' = "\\(.*"))) %>%
+        dplyr::arrange(desc(Combined.Score))) %>%
 
       dplyr::mutate(Class = factor(Class, levels = c("BP", "MF", "CC"))) %>%
       tidyr::separate_wider_delim(cols = Genes, delim = ";", names_sep = "", too_few = "align_start") %>%
