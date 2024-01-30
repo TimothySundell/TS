@@ -38,7 +38,7 @@ You can find a reference webpage [*here*](https://timothysundell.github.io/TS/),
 To install the latest version of the TS package:
 
 ``` r
-devtools::install_github(TimothySundell/TS)
+devtools::install_github("TimothySundell/TS")
 ```
 
 ***
