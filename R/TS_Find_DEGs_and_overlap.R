@@ -50,7 +50,11 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
       only.pos = only_pos_markers,
       test.use = test_use
     ) %>% dplyr::filter(dplyr::between(p_val_adj, 0, 0.05)) %>%
-    dplyr::mutate(gene = rownames(.))
+    dplyr::mutate(gene = rownames(.),
+                  gene_type = factor(case_when(gene %in% molecules$tf_toronto$tf_toronto ~ "TF",
+                                               gene %in% molecules$survival_no_tfs$survival_no_tfs ~ "Survival",
+                                               .default = "Other"),
+                                     levels = c("TF", "Survival", "Other")))
 
   cat("\nFinding genes upregulated in cluster", ident.2, "\n")
   # Find upregulated genes in ident.2
@@ -62,7 +66,11 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
       only.pos = only_pos_markers,
       test.use = test_use
     ) %>% dplyr::filter(dplyr::between(p_val_adj, 0, 0.05)) %>%
-    dplyr::mutate(gene = rownames(.))
+    dplyr::mutate(gene = rownames(.),
+                  gene_type = factor(case_when(gene %in% molecules$tf_toronto$tf_toronto ~ "TF",
+                                               gene %in% molecules$survival_no_tfs$survival_no_tfs ~ "Survival",
+                                               .default = "Other"),
+                                     levels = c("TF", "Survival", "Other")))
 
   # Find shared markers
   ## Add metadata to allow analyses
