@@ -59,6 +59,8 @@ Will maybe be fixed in the future.
 - Functions for analysing scRNA-seq data
 - General data-wrangling
 
+------------------------------------------------------------------------
+
 ## Repo activity
 
 <figure>

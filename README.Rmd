@@ -60,6 +60,8 @@ Will maybe be fixed in the future.
 - Functions for analysing scRNA-seq data
 - General data-wrangling
 
+***
+
 ## Repo activity
 ![Repo activity](https://repobeats.axiom.co/api/embed/6ceecc56e6072d87a2a5cba22d6ddb12968a964d.svg "Repobeats analytics image")
 
