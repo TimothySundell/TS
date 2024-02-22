@@ -51,6 +51,7 @@ Will output resulting dataframe from Seurat::MapQuery</p>
 <span>  dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>,</span>
 <span>  reference_object_assay <span class="op">=</span> <span class="st">"integrated"</span>,</span>
 <span>  query_object_assay <span class="op">=</span> <span class="st">"integrated"</span>,</span>
+<span>  normalization.method <span class="op">=</span> <span class="st">"SCT"</span>,</span>
 <span>  plot_3D <span class="op">=</span> <span class="cn">F</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -75,6 +76,10 @@ Will output resulting dataframe from Seurat::MapQuery</p>
 
 <dt>query_object_assay</dt>
 <dd><p>Assay to use for query Seurat object. Defaults to 'integrated'</p></dd>
+
+
+<dt>normalization.method</dt>
+<dd><p>Normalization method used by FindTransferAnchors. Alternatives are 'LogNormalize' or 'SCT'. Defaults to 'SCT'.</p></dd>
 
 
 <dt>plot_3D</dt>
