@@ -50,18 +50,18 @@ TS_Seurat_from_file <- function(
   input.data <- Seurat::Read10X(data.dir = input_data)
   seurat_object <- Seurat::CreateSeuratObject(counts = input.data, project = project_name, min.cells = min.cells, min.features = min.features)
 
-  cat("Calculating proportion mitochondrial transcripts\n")
+  message("Calculating proportion mitochondrial transcripts")
   seurat_object[["percent.mt"]] <- Seurat::PercentageFeatureSet(seurat_object, pattern = "^MT-")
-  cat("Calculating proportion ribosomal transcripts\n")
+  message("Calculating proportion ribosomal transcripts")
   seurat_object[["percent.ribo"]] <- Seurat::PercentageFeatureSet(seurat_object, pattern = "^RP[SL]")
-  cat("Calculating proportion of MALAT1 transcripts\n")
+  message("Calculating proportion of MALAT1 transcripts")
   seurat_object[["percent.malat1"]] <- Seurat::PercentageFeatureSet(seurat_object, pattern = "MALAT1")
 
   seurat_object <- Seurat::AddMetaData(object = seurat_object, metadata = sample_ID, col.name = "sample_ID")
 
   if(remove_ig_genes){
     # Removing Ig-genes
-    cat("Removing Ig-genes prior to clustering\n")
+    message("Removing Ig-genes prior to clustering")
     seurat_object2 <- seurat_object[!grepl("^IG[HKL][VJCADEGM]", rownames(seurat_object)), ]
   }
   else if(!remove_ig_genes){
@@ -69,28 +69,28 @@ TS_Seurat_from_file <- function(
   }
 
   # Normalize and scale data
-  cat("Normalizing and scaling data\n")
+  message("Normalizing and scaling data")
   seurat_object2 <- Seurat::NormalizeData(seurat_object2, normalization.method = normalization.method, scale.factor = scale.factor, verbose = F)
   seurat_object2 <- Seurat::FindVariableFeatures(seurat_object2, selection.method = selection.method, nfeatures = nfeatures, verbose = F)
   seurat_object2 <- Seurat::ScaleData(seurat_object2, features = rownames(seurat_object2), verbose = F)
   # Run PCA and make NN graph
-  cat("Running PCA\n")
+  message("Running PCA")
   seurat_object2 <- Seurat::RunPCA(seurat_object2, features = Seurat::VariableFeatures(object = seurat_object2), verbose = F)
-  cat("Building NN graph\n")
+  message("Building NN graph")
   seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = regular_clustering_dims, nn.method = regular_clustering_nn.method, verbose = F)
 
   # Set resolution parameter
-  cat("Finding those clusters...\n")
+  message("Finding those clusters...")
   seurat_object2 <- Seurat::FindClusters(seurat_object2, resolution = seq(0, 2, 0.2), verbose = F)
   print(clustree::clustree(seurat_object2))
   chosen_resolution <- readline(prompt = "Choose resolution for clustering: ")
   seurat_object2 <- Seurat::FindClusters(seurat_object2, resolution = as.numeric(chosen_resolution), verbose = F)
-  cat("Calculating UMAP coordinates\n")
+  message("Calculating UMAP coordinates")
   seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = regular_clustering_dims, verbose = F)
 
   if(remove_ig_genes){
     # Add back Ig-genes
-    cat("Adding back Ig-genes in assay 'Iggenes'\n")
+    message("Adding back Ig-genes in assay 'Iggenes'")
     seurat_object2[["Iggenes"]] <- Seurat::CreateAssayObject(counts = Seurat::GetAssayData(object = seurat_object, slot = "count", assay = "RNA"))
     seurat_object2 <- Seurat::NormalizeData(seurat_object2, normalization.method = normalization.method, scale.factor = scale.factor, assay = "Iggenes", verbose = F)
     seurat_object2 <- Seurat::ScaleData(seurat_object2, features = rownames(seurat_object2), assay = "Iggenes", verbose = F)
@@ -104,7 +104,7 @@ TS_Seurat_from_file <- function(
 
   # Subset wanted clusters
   keep_clusters <- readline('What clusters do you want to keep? Numbers separated only by commas: ')
-  cat("Subsetting and running normalisation and scaling of the new data\n")
+  message("Subsetting and running normalisation and scaling of the new data")
   keep_clusters <- strsplit(keep_clusters, ',')
   keep_clusters <- as.numeric(unlist(keep_clusters))
   seurat_object2 <- base::subset(seurat_object2, idents = keep_clusters)
@@ -116,39 +116,39 @@ TS_Seurat_from_file <- function(
   run_SCT <- as.character(readline("Do you want to run SCTransform as well? Enter 'y' or 'n': "))
 
   if(run_SCT == "y"){
-    cat("Running SCTransform\n")
+    message("Running SCTransform")
     seurat_object2 <- Seurat::SCTransform(object = seurat_object2, verbose = FALSE, ncells = NULL)
-    cat("Running PCA\n")
+    message("Running PCA")
     seurat_object2 <- Seurat::RunPCA(object = seurat_object2, verbose = FALSE)
-    cat("Calculating shiny new UMAP coordinates\n")
+    message("Calculating shiny new UMAP coordinates")
     seurat_object2 <- Seurat::RunUMAP(object = seurat_object2, dims = SCT_clustering_dims, verbose = FALSE)
     seurat_object2 <- Seurat::FindNeighbors(object = seurat_object2, dims = SCT_clustering_dims, verbose = FALSE, nn.method = regular_clustering_nn.method)
-    cat(paste0("Finding clusters with resolution ", as.numeric(chosen_resolution), "\n"))
+    message("Finding clusters with resolution ", as.numeric(chosen_resolution))
     seurat_object2 <- Seurat::FindClusters(object = seurat_object2, verbose = FALSE, resolution = as.numeric(chosen_resolution))
     print(Seurat::DimPlot(object = seurat_object2, label = T))
   }
 
   else if(run_SCT == "n"){
-    cat("Normalizing and scaling data with filtered data\n")
+    message("Normalizing and scaling data with filtered data")
     seurat_object2 <- Seurat::NormalizeData(seurat_object2, normalization.method = normalization.method, scale.factor = scale.factor, verbose = F)
     seurat_object2 <- Seurat::FindVariableFeatures(seurat_object2, selection.method = selection.method, nfeatures = nfeatures, verbose = F)
     seurat_object2 <- Seurat::ScaleData(seurat_object2, features = rownames(seurat_object2), verbose = F)
     # Run PCA and make NN graph
-    cat("Running PCA and building NN graph with filtered data\n")
+    message("Running PCA and building NN graph with filtered data")
     seurat_object2 <- Seurat::RunPCA(seurat_object2, features = Seurat::VariableFeatures(object = seurat_object2), verbose = F)
     seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = regular_clustering_dims, nn.method = regular_clustering_nn.method, verbose = F)
 
     # Set resolution parameter
-    cat("Finding clusters with filtered data\n")
+    message("Finding clusters with filtered data")
     seurat_object2 <- Seurat::FindClusters(seurat_object2, resolution = as.numeric(chosen_resolution), verbose = F)
-    cat("Calculating UMAP coordinates with filtered data\n")
+    message("Calculating UMAP coordinates with filtered data")
     seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = regular_clustering_dims, verbose = F)
     print(Seurat::DimPlot(object = seurat_object2, label = T))
-    cat("\nExporting filtered Seurat object\n")
+    message("\nExporting filtered Seurat object")
   }
 
 
 
-  cat("Done")
+  message("Done")
   return(seurat_object2)
 }
