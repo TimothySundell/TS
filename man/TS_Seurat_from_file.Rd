@@ -31,7 +31,7 @@ TS_Seurat_from_file(
 
 \item{SCT_clustering_dims}{What PCA components to use for building NN graph and dimensionality reduction with SCTransformed data. Defaults to "1:20".}
 
-\item{project_name}{Required by Seurat. Defaults to "Seurat". Added automatically as metadata in column "orig.ident"}
+\item{project_name}{Required by Seurat. Defaults to the same value as \link{sample_ID}. Added automatically as metadata in column "orig.ident"}
 
 \item{min.cells}{Include features/genes detected in at least this many cells. Defaults to 3.}
 

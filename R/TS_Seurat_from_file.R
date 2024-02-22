@@ -9,7 +9,7 @@
 #' @param remove_ig_genes Filters out Ig-genes prior to clustering. Which can help in finding biologically relevant clusters, as shown in Sundell et. al., 2022. Defaults to TRUE.
 #' @param min.cells Include features/genes detected in at least this many cells. Defaults to 3.
 #' @param min.features Keep cells with at least this many features detected. Defaults to 200.
-#' @param project_name Required by Seurat. Defaults to "Seurat". Added automatically as metadata in column "orig.ident"
+#' @param project_name Required by Seurat. Defaults to the same value as [sample_ID]. Added automatically as metadata in column "orig.ident"
 #' @param normalization.method Normalization method to use. Alternatives are "LogNormalize" (default), "CLR", "RC".
 #' @param scale.factor Scale factor for cell-level normalization. Defaults to 10000
 #' @param selection.method Method for finding variable features. Alternatives are "vst" (default), "mean.var.plot", "dispersion".
