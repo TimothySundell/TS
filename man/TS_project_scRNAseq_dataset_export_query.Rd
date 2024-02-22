@@ -10,6 +10,7 @@ TS_project_scRNAseq_dataset_export_query(
   dims = 1:20,
   reference_object_assay = "integrated",
   query_object_assay = "integrated",
+  normalization.method = "SCT",
   plot_3D = F
 )
 }
@@ -23,6 +24,8 @@ TS_project_scRNAseq_dataset_export_query(
 \item{reference_object_assay}{Assay to use for reference Seurat object. Defaults to 'integrated'}
 
 \item{query_object_assay}{Assay to use for query Seurat object. Defaults to 'integrated'}
+
+\item{normalization.method}{Normalization method used by FindTransferAnchors. Alternatives are 'LogNormalize' or 'SCT'. Defaults to 'SCT'.}
 
 \item{plot_3D}{Whether to calculate 3 dimensions for the UMAP model. Defaults to 'FALSE'}
 }
