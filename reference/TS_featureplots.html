@@ -45,6 +45,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">TS_featureplots</span><span class="op">(</span></span>
 <span>  <span class="va">features</span>,</span>
 <span>  seurat_object <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">default_seurat_object</span><span class="op">)</span>,</span>
+<span>  wrap_plots <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  wrap_columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lightgray"</span>, <span class="st">"#FEFDE2"</span>, <span class="st">"#FEEAC7"</span>, <span class="st">"#FDD7AC"</span>, <span class="st">"#FDC591"</span>, <span class="st">"#FDB276"</span>, <span class="st">"#FC9F5B"</span>,</span>
 <span>    <span class="st">"#FC8C40"</span>, <span class="st">"#FC8C40"</span>, <span class="st">"#EB753C"</span>, <span class="st">"#DA5D38"</span>, <span class="st">"#C94634"</span>, <span class="st">"#B72F30"</span>, <span class="st">"#A6172C"</span>,</span>
 <span>    <span class="st">"#950028"</span><span class="op">)</span>,</span>
@@ -57,27 +59,35 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>features</dt>
-<dd><p>Vector of features to plot</p></dd>
+<dd><p>Vector of features to plot.</p></dd>
 
 
 <dt>seurat_object</dt>
-<dd><p>The Seurat object you wish to plot</p></dd>
+<dd><p>The Seurat object you wish to plot.</p></dd>
+
+
+<dt>wrap_plots</dt>
+<dd><p>Whether to wrap plots into one by patchwork::wrap_plots().</p></dd>
+
+
+<dt>wrap_columns</dt>
+<dd><p>If wrap_plots = T, how many columns do you want for the final plot.</p></dd>
 
 
 <dt>cols</dt>
-<dd><p>Vector of 2 colors to use (low-&gt;high), default = c("lightgray", "red")</p></dd>
+<dd><p>Vector of colors to use (low-&gt;high), defaults to a 15-step gradient from "lightgray" to "#950028"</p></dd>
 
 
 <dt>reduction</dt>
-<dd><p>Dimensionality reduction technique to use for plotting, default = "umap"</p></dd>
+<dd><p>Dimensionality reduction technique to use for plotting, default = "umap".</p></dd>
 
 
 <dt>pt.size</dt>
-<dd><p>Dot size, default = 1</p></dd>
+<dd><p>Size of each dot, default = 1.</p></dd>
 
 
 <dt>order</dt>
-<dd><p>Whether to plot positive cells last, e.g. on top, default = TRUE</p></dd>
+<dd><p>Whether to plot positive cells last, e.g. on top, default = TRUE.</p></dd>
 
 </dl></div>
 
