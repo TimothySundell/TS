@@ -2,11 +2,16 @@
 #'
 #' @description
 #' Input the three matrices from CellRanger and analyse them automatically.
+#' Will first run an analysis pipeline with log-normalized counts,
+#' allow you to set parameters on-the-fly, remove unwanted clusters,
+#' and then run SCTransform_v1 on the filtered data.
+#'
 #' Based on Seurat, using the workflow published in Sundell et. al., 2022 (https://doi.org/10.1093/bfgp/elac044)
 #'
 #' @param input_data File path to the folder containing the three matrices used for Seurat
 #' @param sample_ID Required ID-tag for your sample. Will be added as metadata in column "sample_ID". Handy in downstream analyses, e.g. integration, batch-correction etc.
 #' @param remove_ig_genes Filters out Ig-genes prior to clustering. Which can help in finding biologically relevant clusters, as shown in Sundell et. al., 2022. Defaults to TRUE.
+#' @param additional_markers Additional gene names to plot to aid in exclusion of unwanted cell types. Default markers are "percent.mt", "percent.ribo", "percent.malat1", "CD19", "CD3E", "CD14", "CD56".
 #' @param min.cells Include features/genes detected in at least this many cells. Defaults to 3.
 #' @param min.features Keep cells with at least this many features detected. Defaults to 200.
 #' @param project_name Required by Seurat. Defaults to the same value as [sample_ID]. Added automatically as metadata in column "orig.ident"
@@ -14,9 +19,9 @@
 #' @param scale.factor Scale factor for cell-level normalization. Defaults to 10000
 #' @param selection.method Method for finding variable features. Alternatives are "vst" (default), "mean.var.plot", "dispersion".
 #' @param nFeatures Number of variable features to calculate. Defaults to 2000
-#' @param regular_clustering_dims What PCA components to use for building NN graph and dimensionality reduction with regular normalization/scaling. Defaults to "1:10".
-#' @param regular_clustering_nn.method Nearest-neighbour method to use for clustering with regular normalization/scaling. Alternatives are "rann" or "annoy". Defaults to "rann"
-#' @param SCT_clustering_dims What PCA components to use for building NN graph and dimensionality reduction with SCTransformed data. Defaults to "1:20".
+#' @param regular_clustering_dims What PCA components to use for building NN graph and dimensionality reduction with regular normalization/scaling. Defaults to NULL.
+#' @param nn.method Nearest-neighbour method to use for clustering with regular normalization/scaling. Alternatives are "rann" or "annoy". Defaults to "rann".
+#' @param SCT_clustering_dims What PCA components to use for building NN graph and dimensionality reduction with SCTransformed data. Defaults to NULL.
 #'
 #' @export
 
@@ -24,8 +29,9 @@ TS_Seurat_from_file <- function(
     input_data,
     sample_ID = NULL,
     remove_ig_genes = T,
-    regular_clustering_dims = 1:10,
-    SCT_clustering_dims = 1:20,
+    regular_clustering_dims = NULL,
+    SCT_clustering_dims = NULL,
+    additional_markers = NULL,
     project_name = NULL,
     min.cells = 3,
     min.features = 200,
@@ -33,11 +39,11 @@ TS_Seurat_from_file <- function(
     scale.factor = 10000,
     selection.method = "vst",
     nfeatures = 2000,
-    regular_clustering_nn.method = "rann"){
+    nn.method = "rann"){
 
-  require(Seurat)
-  require(patchwork)
-  require(clustree)
+  library(Seurat)
+  library(patchwork)
+  library(clustree)
 
   if(is.null(sample_ID)){
     stop("\nYou need to specify sample_ID\nSample ID will be added as metadata to your output Seurat object\n\n")
@@ -73,11 +79,32 @@ TS_Seurat_from_file <- function(
   seurat_object2 <- Seurat::NormalizeData(seurat_object2, normalization.method = normalization.method, scale.factor = scale.factor, verbose = F)
   seurat_object2 <- Seurat::FindVariableFeatures(seurat_object2, selection.method = selection.method, nfeatures = nfeatures, verbose = F)
   seurat_object2 <- Seurat::ScaleData(seurat_object2, features = rownames(seurat_object2), verbose = F)
-  # Run PCA and make NN graph
+  # Run PCA
   message("Running PCA")
   seurat_object2 <- Seurat::RunPCA(seurat_object2, features = Seurat::VariableFeatures(object = seurat_object2), verbose = F)
-  message("Building NN graph")
-  seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = regular_clustering_dims, nn.method = regular_clustering_nn.method, verbose = F)
+
+  # Build SNN graph
+  if(is.null(regular_clustering_dims)) {
+    print(Seurat::ElbowPlot(object = seurat_object2))
+    regular_clustering_dims <-
+      readline(prompt = "To build the SNN graph:
+Enter the number of the maximum PC you want to include, e.g. '10', OR
+enter which specific PCs you want to use, separated ONLY by commas: ")
+
+    if (grepl(pattern = ",", x = regular_clustering_dims)) {
+      regular_clustering_dims <- strsplit(regular_clustering_dims, ",")
+      regular_clustering_dims <- as.numeric(unlist(regular_clustering_dims))
+      seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = regular_clustering_dims, nn.method = nn.method, verbose = T)
+      message("Calculating UMAP coordinates")
+      seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = regular_clustering_dims, verbose = F)
+    } else{seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = 1:as.numeric(regular_clustering_dims), nn.method = nn.method, verbose = T)
+    message("Calculating UMAP coordinates")
+    seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = 1:as.numeric(regular_clustering_dims), verbose = F)
+    }
+  } else{seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = regular_clustering_dims, nn.method = nn.method, verbose = T)
+  message("Calculating UMAP coordinates")
+  seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = regular_clustering_dims, verbose = F)
+  }
 
   # Set resolution parameter
   message("Finding those clusters...")
@@ -85,8 +112,6 @@ TS_Seurat_from_file <- function(
   print(clustree::clustree(seurat_object2))
   chosen_resolution <- readline(prompt = "Choose resolution for clustering: ")
   seurat_object2 <- Seurat::FindClusters(seurat_object2, resolution = as.numeric(chosen_resolution), verbose = F)
-  message("Calculating UMAP coordinates")
-  seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = regular_clustering_dims, verbose = F)
 
   if(remove_ig_genes){
     # Add back Ig-genes
@@ -99,7 +124,7 @@ TS_Seurat_from_file <- function(
   # Plot the stuff
   plot_list <- list()
   plot_list[["Dimplot"]] <- Seurat::DimPlot(object = seurat_object2, label = T)
-  plot_list[["Vlnplots"]] <- suppressWarnings(Seurat::VlnPlot(object = seurat_object2, features = c("percent.mt", "percent.ribo", "percent.malat1", "CD19", "CD3E", "CD14", "CD56"), ncol = 1))
+  plot_list[["Vlnplots"]] <- suppressWarnings(Seurat::VlnPlot(object = seurat_object2, features = c("percent.mt", "percent.ribo", "percent.malat1", "CD19", "CD3E", "CD14", "CD56", additional_markers), ncol = 1))
   print(patchwork::wrap_plots(plot_list, ncol = 2))
 
   # Subset wanted clusters
@@ -120,9 +145,31 @@ TS_Seurat_from_file <- function(
     seurat_object2 <- Seurat::SCTransform(object = seurat_object2, verbose = FALSE, ncells = NULL)
     message("Running PCA")
     seurat_object2 <- Seurat::RunPCA(object = seurat_object2, verbose = FALSE)
+
+    # Build SNN graph
+    if(is.null(SCT_clustering_dims)) {
+      print(Seurat::ElbowPlot(object = seurat_object2))
+      SCT_clustering_dims <-
+        readline(prompt = "To build the SNN graph:
+Enter the number of the maximum PC you want to include, e.g. '20', OR
+enter which specific PCs you want to use, separated ONLY by commas: ")
+
+      if(grepl(pattern = ",", x = SCT_clustering_dims)) {
+        SCT_clustering_dims <- strsplit(SCT_clustering_dims, ",")
+        SCT_clustering_dims <- as.numeric(unlist(SCT_clustering_dims))
+        seurat_object2 <- Seurat::FindNeighbors(object = seurat_object2, dims = SCT_clustering_dims, verbose = TRUE, nn.method = nn.method)
+        message("Calculating shiny new UMAP coordinates")
+        seurat_object2 <- Seurat::RunUMAP(object = seurat_object2, dims = SCT_clustering_dims, verbose = FALSE)
+
+      } else{seurat_object2 <- Seurat::FindNeighbors(object = seurat_object2, dims = 1:as.numeric(SCT_clustering_dims), verbose = TRUE, nn.method = nn.method)
+      message("Calculating shiny new UMAP coordinates")
+      seurat_object2 <- Seurat::RunUMAP(object = seurat_object2, dims = 1:as.numeric(SCT_clustering_dims), verbose = FALSE)
+      }
+    } else{seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = SCT_clustering_dims, nn.method = nn.method, verbose = T)
     message("Calculating shiny new UMAP coordinates")
     seurat_object2 <- Seurat::RunUMAP(object = seurat_object2, dims = SCT_clustering_dims, verbose = FALSE)
-    seurat_object2 <- Seurat::FindNeighbors(object = seurat_object2, dims = SCT_clustering_dims, verbose = FALSE, nn.method = regular_clustering_nn.method)
+    }
+
     message("Finding clusters with resolution ", as.numeric(chosen_resolution))
     seurat_object2 <- Seurat::FindClusters(object = seurat_object2, verbose = FALSE, resolution = as.numeric(chosen_resolution))
     print(Seurat::DimPlot(object = seurat_object2, label = T))
@@ -136,18 +183,21 @@ TS_Seurat_from_file <- function(
     # Run PCA and make NN graph
     message("Running PCA and building NN graph with filtered data")
     seurat_object2 <- Seurat::RunPCA(seurat_object2, features = Seurat::VariableFeatures(object = seurat_object2), verbose = F)
-    seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = regular_clustering_dims, nn.method = regular_clustering_nn.method, verbose = F)
-
+    if(length(regular_clustering_dims) > 1) {
+      seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = regular_clustering_dims, nn.method = nn.method, verbose = T)
+      message("Calculating UMAP coordinates with filtered data")
+      seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = regular_clustering_dims, verbose = F)
+    } else{seurat_object2 <- Seurat::FindNeighbors(seurat_object2, dims = 1:as.numeric(regular_clustering_dims), nn.method = nn.method, verbose = T)
+    message("Calculating UMAP coordinates with filtered data")
+    seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = 1:as.numeric(regular_clustering_dims), verbose = F)
+    }
     # Set resolution parameter
     message("Finding clusters with filtered data")
     seurat_object2 <- Seurat::FindClusters(seurat_object2, resolution = as.numeric(chosen_resolution), verbose = F)
-    message("Calculating UMAP coordinates with filtered data")
-    seurat_object2 <- Seurat::RunUMAP(seurat_object2, dims = regular_clustering_dims, verbose = F)
+
     print(Seurat::DimPlot(object = seurat_object2, label = T))
     message("\nExporting filtered Seurat object")
   }
-
-
 
   message("Done")
   return(seurat_object2)

@@ -4,12 +4,21 @@
 \alias{TS_plot_3D}
 \title{Plot your Seurat object in 3D.}
 \usage{
-TS_plot_3D(seurat_object = get(default_seurat_object), dims = 1:20)
+TS_plot_3D(
+  seurat_object = get(default_seurat_object),
+  dims = 1:20,
+  group.by = NULL,
+  colors = NULL
+)
 }
 \arguments{
 \item{seurat_object}{The Seurat object you want to analyse. Defaults to 'default_seurat_object'}
 
 \item{dims}{What Principal Components to use for calculating the UMAP.}
+
+\item{group.by}{Variable to group cells by. Default is Seurat::Idents(), alternatives are any available metadata in the object.}
+
+\item{colors}{A vector of colors to use for the group.by parameter. Default is hue_pal()(length of unique values in your group.by parameter)}
 }
 \description{
 Will be coloured according to cluster idents with a \code{\link[scales:hue_pal]{scales::hue_pal()}} colouring scheme.
