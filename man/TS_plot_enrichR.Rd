@@ -14,5 +14,5 @@ TS_plot_enrichR(input, sort_on = "neg_log10", n = 10)
 \item{n}{Number of terms to plot for each database. Defaults to '10'.}
 }
 \description{
-A short description...
+Plot the output from \link{TS_run_enrichR}
 }

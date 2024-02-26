@@ -1,8 +1,5 @@
 #' Plot the output from [TS_run_enrichR]
 #'
-#' @description
-#' A short description...
-#'
 #' @param input The output list from [TS::TS_run_enrichR]
 #' @param sort_on What to sort top n terms on. Defaults to 'neg_log10', can also be 'combined_score'
 #' @param n Number of terms to plot for each database. Defaults to '10'.
@@ -10,14 +7,18 @@
 #' @export
 TS_plot_enrichR <- function(input, sort_on = "neg_log10", n = 10){
 
-  require(dplyr)
-  require(ggplot2)
-  require(stringr)
-  require(magrittr)
-  require(forcats)
+  library(dplyr)
+  library(ggplot2)
+  library(stringr)
+  library(magrittr)
+  library(forcats)
+  library(scales)
 
   plot_title <- c(substitute(input))
   plot_title <- gsub(pattern = "_", replacement = "\\ ", x = plot_title)
+
+  named_colours <- scales::hue_pal()(3)
+  names(named_colours) <- c("BP", "CC", "MF") # Allows colouring to be consistent even when there are missing "Classes"
 
   if(sort_on == "neg_log10") {
 
@@ -43,6 +44,13 @@ TS_plot_enrichR <- function(input, sort_on = "neg_log10", n = 10){
 
       dplyr::mutate(Class = factor(Class, levels = c("BP", "MF", "CC"))) %>%
       tidyr::separate_wider_delim(cols = Genes, delim = ";", names_sep = "", too_few = "align_start") %>%
+
+      {if(!"Genes1" %in% colnames(.)) dplyr::mutate(., "Genes1" = NA) else .} %>% # Added this block to allow matrices where no term has enough genes to run "unite"
+      {if(!"Genes2" %in% colnames(.)) dplyr::mutate(., "Genes2" = NA) else .} %>%
+      {if(!"Genes3" %in% colnames(.)) dplyr::mutate(., "Genes3" = NA) else .} %>%
+      {if(!"Genes4" %in% colnames(.)) dplyr::mutate(., "Genes4" = NA) else .} %>%
+      {if(!"Genes5" %in% colnames(.)) dplyr::mutate(., "Genes5" = NA) else .} %>%
+
       tidyr::unite(col = First_five_genes, Genes1, Genes2, Genes3, Genes4, Genes5, sep = ", ", remove = F, na.rm = T) %>%
       dplyr::mutate(Term = factor(Term, levels = Term)) %>%
       dplyr::group_by(Class) %>%
@@ -51,10 +59,11 @@ TS_plot_enrichR <- function(input, sort_on = "neg_log10", n = 10){
     plot <- ggplot2::ggplot(data = data, aes(x = neg_log10, y = forcats::fct_rev(Term), fill = Class)) +
       ggplot2::geom_vline(xintercept = -log10(0.05)) +
       ggplot2::geom_col() +
+      ggplot2::scale_fill_manual(values = named_colours, aesthetics = "fill") + # added this to work with the named colours
       ggplot2::facet_grid(Class ~ ., scales = "free", space = "free") +
       ggplot2::geom_text(aes(x = 0, label = First_five_genes), hjust = 0, check_overlap = F)+
       ggplot2::ggtitle(
-        label = str_sub(string = plot_title, start = 1L, end = -9L),
+        label = stringr::str_sub(string = plot_title, start = 1L, end = -9L),
         subtitle = paste0("Ordered by ", substitute(sort_on))) +
       ggplot2::ylab(label = "Term")
 
@@ -85,6 +94,13 @@ TS_plot_enrichR <- function(input, sort_on = "neg_log10", n = 10){
 
       dplyr::mutate(Class = factor(Class, levels = c("BP", "MF", "CC"))) %>%
       tidyr::separate_wider_delim(cols = Genes, delim = ";", names_sep = "", too_few = "align_start") %>%
+
+      {if(!"Genes1" %in% colnames(.)) dplyr::mutate(., "Genes1" = NA) else .} %>% # Added this block to allow matrices where no term has enough genes to run "unite"
+      {if(!"Genes2" %in% colnames(.)) dplyr::mutate(., "Genes2" = NA) else .} %>%
+      {if(!"Genes3" %in% colnames(.)) dplyr::mutate(., "Genes3" = NA) else .} %>%
+      {if(!"Genes4" %in% colnames(.)) dplyr::mutate(., "Genes4" = NA) else .} %>%
+      {if(!"Genes5" %in% colnames(.)) dplyr::mutate(., "Genes5" = NA) else .} %>%
+
       tidyr::unite(col = First_five_genes, Genes1, Genes2, Genes3, Genes4, Genes5, sep = ", ", remove = F, na.rm = T) %>%
       dplyr::mutate(Term = factor(Term, levels = Term)) %>%
       dplyr::group_by(Class) %>%
@@ -95,10 +111,11 @@ TS_plot_enrichR <- function(input, sort_on = "neg_log10", n = 10){
     plot <- ggplot2::ggplot(data = data, aes(x = neg_log10, y = fct_rev(Term), fill = Class)) +
       ggplot2::geom_vline(xintercept = -log10(0.05)) +
       ggplot2::geom_col() +
+      ggplot2::scale_fill_manual(values = named_colours, aesthetics = "fill") + # added this to work with the named colors
       ggplot2::facet_grid(Class ~ ., scales = "free", space = "free") +
       ggplot2::geom_text(aes(x = 0, label = First_five_genes), hjust = 0, check_overlap = F) +
       ggplot2::ggtitle(
-        label = str_sub(string = plot_title, start = 1L, end = -9L),
+        label = stringr::str_sub(string = plot_title, start = 1L, end = -9L),
         subtitle = paste0("Ordered by ", substitute(sort_on))) +
       ggplot2::ylab(label = "Term")
 
