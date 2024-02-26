@@ -45,7 +45,12 @@ You need to have an already analysed Seurat object to be able to run the functio
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">TS_plot_3D</span><span class="op">(</span>seurat_object <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">default_seurat_object</span><span class="op">)</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">TS_plot_3D</span><span class="op">(</span></span>
+<span>  seurat_object <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">default_seurat_object</span><span class="op">)</span>,</span>
+<span>  dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>,</span>
+<span>  group.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  colors <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -56,6 +61,14 @@ You need to have an already analysed Seurat object to be able to run the functio
 
 <dt>dims</dt>
 <dd><p>What Principal Components to use for calculating the UMAP.</p></dd>
+
+
+<dt>group.by</dt>
+<dd><p>Variable to group cells by. Default is Seurat::Idents(), alternatives are any available metadata in the object.</p></dd>
+
+
+<dt>colors</dt>
+<dd><p>A vector of colors to use for the group.by parameter. Default is hue_pal()(length of unique values in your group.by parameter)</p></dd>
 
 </dl></div>
 
