@@ -7,32 +7,47 @@
 TS_featureplots(
   features,
   seurat_object = get(default_seurat_object),
-  wrap_plots = FALSE,
-  wrap_columns = NULL,
-  cols = c("lightgray", "#FEFDE2", "#FEEAC7", "#FDD7AC", "#FDC591", "#FDB276", "#FC9F5B",
-    "#FC8C40", "#FC8C40", "#EB753C", "#DA5D38", "#C94634", "#B72F30", "#A6172C",
-    "#950028"),
+  wrap_plots = TRUE,
+  wrap_n_columns = NULL,
+  add_dimplot = TRUE,
+  dimplot_group.by = NULL,
+  dimplot_cols = NULL,
+  dimplot_label = TRUE,
+  expression_cols = c("lightgray", "#FEFDE2", "#FEEAC7", "#FDD7AC", "#FDC591", "#FDB276",
+    "#FC9F5B", "#FC8C40", "#FC8C40", "#EB753C", "#DA5D38", "#C94634", "#B72F30",
+    "#A6172C", "#950028"),
   reduction = "umap",
   pt.size = 1,
-  order = T
+  order = TRUE,
+  assay = NULL
 )
 }
 \arguments{
 \item{features}{Vector of features to plot.}
 
-\item{seurat_object}{The Seurat object you wish to plot.}
+\item{seurat_object}{The Seurat object you wish to plot. Defaults to "default_seurat_object".}
 
-\item{wrap_plots}{Whether to wrap plots into one by patchwork::wrap_plots().}
+\item{wrap_plots}{Whether to wrap plots into one by patchwork::wrap_plots(). Defaults to TRUE.}
 
-\item{wrap_columns}{If \link{wrap_plots = T}, how many columns do you want for the final plot.}
+\item{wrap_n_columns}{If \link{wrap_plots = T}, how many columns do you want for the final plot.}
 
-\item{cols}{Vector of colors to use (low->high), defaults to a 15-step gradient from "lightgray" to "#950028"}
+\item{add_dimplot}{If \link{wrap_plots = T}, whether to include Seurat::DimPlot() as the first panel. Defaults to TRUE}
+
+\item{dimplot_group.by}{What metadata to group cells by. Defaults to Seurat::Idents(seurat_object)}
+
+\item{dimplot_cols}{Colours to use for the Seurat::DimPlot(). Defaults to scales::hue_pal()(length(levels(Seurat::Idents(seurat_object))))}
+
+\item{dimplot_label}{Whether to label the DimPlot by \link{dimplot_group.by}. Defaults to TRUE.}
+
+\item{expression_cols}{Vector of colors to use (low->high), defaults to a 15-step gradient from "lightgray" to "#950028"}
 
 \item{reduction}{Dimensionality reduction technique to use for plotting, default = "umap".}
 
 \item{pt.size}{Size of each dot, default = 1.}
 
 \item{order}{Whether to plot positive cells last, e.g. on top, default = TRUE.}
+
+\item{assay}{What assay to pull gene expression data from. Defaults to "RNA", as this is the convention.}
 }
 \description{
 Output one or multiple featureplots
