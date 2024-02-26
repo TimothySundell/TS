@@ -1,7 +1,7 @@
 #' Plot your Seurat object in 3D.
 #'
 #' @description
-#' Will be coloured according to cluster idents with a [scales::hue_pal()] colouring scheme.
+#' Will be coloured according to cluster idents with a scales::hue_pal() colouring scheme.
 #' You need to have an already analysed Seurat object to be able to run the function.
 #'
 #' @param seurat_object The Seurat object you want to analyse. Defaults to 'default_seurat_object'

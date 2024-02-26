@@ -21,6 +21,6 @@ TS_plot_3D(
 \item{colors}{A vector of colors to use for the group.by parameter. Default is hue_pal()(length of unique values in your group.by parameter)}
 }
 \description{
-Will be coloured according to cluster idents with a \code{\link[scales:hue_pal]{scales::hue_pal()}} colouring scheme.
+Will be coloured according to cluster idents with a scales::hue_pal() colouring scheme.
 You need to have an already analysed Seurat object to be able to run the function.
 }
