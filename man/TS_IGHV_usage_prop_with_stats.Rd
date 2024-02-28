@@ -2,7 +2,7 @@
 % Please edit documentation in R/TS_IGHV_usage_prop_with_stats.R
 \name{TS_IGHV_usage_prop_with_stats}
 \alias{TS_IGHV_usage_prop_with_stats}
-\title{Plots IGHV usage between groups together with Fishers Exact Test}
+\title{Plots IGHV usage between two groups using Fisher's Exact Test}
 \usage{
 TS_IGHV_usage_prop_with_stats(
   input_file,
@@ -10,8 +10,7 @@ TS_IGHV_usage_prop_with_stats(
   sample2,
   export_pdf = F,
   return_only_data = F,
-  ylim_min = 0,
-  ylim_max = 15,
+  ylim_max = NULL,
   p.adj.method = "hochberg"
 )
 }
@@ -26,13 +25,11 @@ TS_IGHV_usage_prop_with_stats(
 
 \item{return_only_data}{Whether to only return the the calculated frequencies and the test matrices. 'FALSE' returns the plot in standard out. Defaults to 'FALSE'}
 
-\item{ylim_min}{Defaults to '0'}
-
-\item{ylim_max}{Defaults to '15'. Values above this will be removed.}
+\item{ylim_max}{Defaults to NULL. ggplot2 will adjust the y-axis scale to fit the data. Set this if you want to keep it consistent between plots.}
 
 \item{p.adj.method}{Method for adjust for multiple tests. Defaults to 'Benjamini-Hochberg'. Alternative is 'FDR'.}
 }
 \description{
-Compare the IGHV usage between two groups and perform Fishers Exact Test to test usage.
-This also means that you can only input two groups, due to limiations to the statistical test used. Future update?
+Plot the IGHV usage from two groups and perform Fisher's Exact Test to find significant differences.
+Limited to comparing two groups.
 }

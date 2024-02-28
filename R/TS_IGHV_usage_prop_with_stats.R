@@ -1,22 +1,18 @@
-#' Plots IGHV usage between groups together with Fishers Exact Test
+#' Plots IGHV usage between two groups using Fisher's Exact Test
 #'
 #' @description
-#' Compare the IGHV usage between two groups and perform Fishers Exact Test to test usage.
-#' This also means that you can only input two groups, due to limiations to the statistical test used. Future update?
+#' Plot the IGHV usage from two groups and perform Fisher's Exact Test to find significant differences.
+#' Limited to comparing two groups.
 #'
 #' @param input_file Takes as input a dataframe from 10X Genomixs Cellranger VDJ pipeline that has been through QC with added sample/grouping information in the column "sample"
 #' @param sample1 Grouping variable value for sample 1
 #' @param sample2 Grouping variable value for sample 2
 #' @param export_pdf Whether to automatically export the plot as PDF in your working directory. Defaults to 'FALSE'
 #' @param return_only_data Whether to only return the the calculated frequencies and the test matrices. 'FALSE' returns the plot in standard out. Defaults to 'FALSE'
-#' @param ylim_min Defaults to '0'
-#' @param ylim_max Defaults to '15'. Values above this will be removed.
+#' @param ylim_max Defaults to NULL. ggplot2 will adjust the y-axis scale to fit the data. Set this if you want to keep it consistent between plots.
 #' @param p.adj.method Method for adjust for multiple tests. Defaults to 'Benjamini-Hochberg'. Alternative is 'FDR'.
 #' @importFrom magrittr  %>%
 #' @export
-
-# Add the v_gene_levels requirement
-# Can I add the data into the package itself?
 
 TS_IGHV_usage_prop_with_stats <-
   function(input_file,
@@ -24,13 +20,8 @@ TS_IGHV_usage_prop_with_stats <-
            sample2,
            export_pdf = F,
            return_only_data = F,
-           ylim_min = 0,
-           ylim_max = 15,
+           ylim_max = NULL,
            p.adj.method = "hochberg") {
-
-    ########################################################
-    ### Still don't know if the v_gene_levels worked yet ###
-    ########################################################
 
     # Load required packages #
     library(ggplot2)
@@ -111,7 +102,7 @@ TS_IGHV_usage_prop_with_stats <-
       dplyr::ungroup() %>%
       dplyr::group_by(v_gene) %>%
       dplyr::mutate(
-        cm = list(# not needed for the analysis itself, just keeping if we need to give it a look
+        cm = list(# Not required for the analyses per se, but nice to have if you want to go back and have a look at a specific matrix.
           c(
             get(count_sample1),
             get(count_sample2),
@@ -153,21 +144,32 @@ TS_IGHV_usage_prop_with_stats <-
       ################################
       ## Plot IGHV usage with stats ##
       ################################
+
+      # Prepare data for plotting
+      plot_data <- input_file %>%
+        dplyr::mutate(
+          v_gene = factor(v_gene, levels = v_gene_levels),
+          sample = factor(sample, levels = c(sample1, sample2))
+        ) %>%
+        dplyr::group_by(sample) %>%
+        dplyr::count(v_gene) %>%
+        dplyr::ungroup() %>%
+        dplyr::filter(!is.na(v_gene)) %>%
+        dplyr::group_by(sample, v_gene) %>%
+        dplyr::summarise(n) %>%
+        dplyr::mutate(proportion = n / sum(n) * 100)
+
+      if(!is.null(ylim_max)){
+        if(ylim_max < max(plot_data$proportion)){
+          message("Warning: You have set your ylim_max to ", ylim_max, ". Increase the value of ylim_max to plot them.
+  These values will not be plotted: ")
+          print(plot_data[plot_data$proportion > ylim_max,])
+        }
+      }
       plot <- ggplot2::ggplot() +
 
         ggplot2::geom_col(
-          data = input_file %>%
-            dplyr::mutate(
-              v_gene = factor(v_gene, levels = v_gene_levels),
-              sample = factor(sample, levels = c(sample1, sample2))
-            ) %>%
-            dplyr::group_by(sample) %>%
-            dplyr::count(v_gene) %>%
-            dplyr::ungroup() %>%
-            dplyr::filter(!is.na(v_gene)) %>%
-            dplyr::group_by(sample, v_gene) %>%
-            dplyr::summarise(n) %>%
-            dplyr::mutate(proportion = n / sum(n) * 100),
+          data = plot_data,
           mapping = aes(x = v_gene, y = proportion, fill = sample),
           width = 0.8,
           position = position_dodge(),
@@ -188,11 +190,13 @@ TS_IGHV_usage_prop_with_stats <-
           family = "Arial"
         )) +
         ggplot2::labs(title = plot_title, subtitle = plot_subtitle) +
-        ggplot2::ylim(ylim_min, ylim_max) +
+
+        # Only set y limits if actually entered
+        {if(!is.null(ylim_max)) ggplot2::ylim(0, ylim_max)} +
 
         # Add asterisks for significant differences
         ggrepel::geom_label_repel(
-          data = ggplot2::filter(res, p.adj < 0.05),
+          data = dplyr::filter(res, p.adj < 0.05),
           label.padding = 0.01,
           parse = F,
           size = 5,
@@ -201,7 +205,7 @@ TS_IGHV_usage_prop_with_stats <-
           nudge_y = 0.01,
           mapping = aes(
             x = v_gene,
-            y = purrr:ap2_dbl((get(frequency_sample1) * 100), (get(frequency_sample2) * 100), max),
+            y = purrr::map2_dbl((get(frequency_sample1) * 100), (get(frequency_sample2) * 100), max),
             label = p.sig
           )
         )
