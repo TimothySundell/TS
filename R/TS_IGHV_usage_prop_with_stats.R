@@ -33,12 +33,12 @@ TS_IGHV_usage_prop_with_stats <-
     ########################################################
 
     # Load required packages #
-    require(ggplot2)
-    require(ggrepel)
-    require(dplyr)
-    require(magrittr)
-    require(purrr)
-    require(stats)
+    library(ggplot2)
+    library(ggrepel)
+    library(dplyr)
+    library(magrittr)
+    library(purrr)
+    library(stats)
 
     options(dplyr.summarise.inform = F) # TMI!
 
@@ -127,7 +127,7 @@ TS_IGHV_usage_prop_with_stats <-
         ) %>%
           matrix(nrow = 2) %>%
           stats::fisher.test() %>%
-          purrr:pluck("p.value"),
+          purrr::pluck("p.value"),
         .keep = "unused"
       ) %>%
       dplyr::ungroup() %>%
