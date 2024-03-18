@@ -9,7 +9,7 @@ TS_plot_counts_violin <- function(seurat_object = get(default_seurat_object), sl
   require(Seurat)
   require(ggplot2)
 
-  temp_plot <- SEurat::FetchData(seurat_object, slot = slot, vars = c(gene, "ident"))
+  temp_plot <- Seurat::FetchData(seurat_object, slot = slot, vars = c(gene, "ident"))
   ggplot2::ggplot(data = temp_plot, aes(y = get(gene), x = ident)) +
     ggplot2::geom_violin() +
     ggplot2::theme_bw(base_family = "Arial") +
