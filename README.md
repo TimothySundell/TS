@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# TS - A collection of QoL functions <a href="https://github.com/TimothySundell/TS"><img src="man/Figures/TS_logo.png" align="right" height="138" /></a>
+# TS - A collection of QoL functions <a href="https://github.com/TimothySundell/TS"><img src="man/Figures/TS_logo_DALL-E_no_background.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
