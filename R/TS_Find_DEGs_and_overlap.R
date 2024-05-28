@@ -29,6 +29,10 @@
 #' @export
 TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_variable_name = "tested_population", only_pos_markers = T, test_use = "wilcox", plot_venn = F, export_venn = F, filename_pdf = "Venn_output", width = 8.27, heigth = 5.83){
 
+  # 240528
+  # Changed code so that p_val_adj = 0, no longer is filtered out.
+  # This is because those that are = 0 are p-values smaller than the .Machine$double.xmin value (~ 2.2e-308)
+
   library(Seurat)
   library(magrittr)
   library(dplyr)
@@ -49,7 +53,7 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
       ident.2 = ident.2,
       only.pos = only_pos_markers,
       test.use = test_use
-    ) %>% dplyr::filter(dplyr::between(p_val_adj, 0, 0.05)) %>%
+    ) %>% dplyr::filter(p_val_adj < 0.05) %>%
     dplyr::mutate(gene = rownames(.),
                   gene_type = factor(case_when(gene %in% molecules$tf_toronto$tf_toronto ~ "TF",
                                                gene %in% molecules$survival_no_tfs$survival_no_tfs ~ "Survival",
@@ -65,7 +69,7 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
       ident.2 = ident.1,
       only.pos = only_pos_markers,
       test.use = test_use
-    ) %>% dplyr::filter(dplyr::between(p_val_adj, 0, 0.05)) %>%
+    ) %>% dplyr::filter(p_val_adj < 0.05) %>%
     dplyr::mutate(gene = rownames(.),
                   gene_type = factor(case_when(gene %in% molecules$tf_toronto$tf_toronto ~ "TF",
                                                gene %in% molecules$survival_no_tfs$survival_no_tfs ~ "Survival",
@@ -101,7 +105,7 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
   temp_colname1 <- as.name(colnames(res[[3]][5]))
 
   res[[3]] <- res[[3]] %>%
-    dplyr::filter(dplyr::between(!!temp_colname1, 0, 0.05))
+    dplyr::filter((!!temp_colname1 < 0.05))
 
   if(only_pos_markers) {
     temp_colname2 <- as.name(colnames(res[[3]][2]))
