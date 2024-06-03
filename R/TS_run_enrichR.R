@@ -23,7 +23,7 @@ TS_run_enrichR <- function(gene_list, plot_enrichr = F, database_to_plot = "GO_B
 
   temp.enrichr <- enrichR::enrichr(genes = gene_list, databases = databases) %>%
     lapply(X = ., FUN = function(x){
-      x <- x %>% dplyr::filter(Adjusted.P.value > 0 & Adjusted.P.value < 0.05)
+      x <- x %>% dplyr::filter(Adjusted.P.value < 0.05)
     }) %>%
     lapply(X =., FUN = function(x){
       x <- x %>% tidyr::separate_wider_regex(
