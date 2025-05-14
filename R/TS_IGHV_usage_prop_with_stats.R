@@ -21,7 +21,9 @@ TS_IGHV_usage_prop_with_stats <-
            export_pdf = F,
            return_only_data = F,
            ylim_max = NULL,
-           p.adj.method = "hochberg") {
+           p.adj.method = "hochberg",
+           fill_colours = c("gray80", "gray50"),
+           border_colour = "black") {
 
     # Load required packages #
     library(ggplot2)
@@ -71,6 +73,8 @@ TS_IGHV_usage_prop_with_stats <-
                        "IGHV3-9", "IGHV1-8", "IGHV5-10-1", "IGHV3-64D", "IGHV3-7", "IGHV3-6", "IGHV(III)-5-2",
                        "IGHV(III)-5-1", "IGHV2-5", "IGHV7-4-1", "IGHV4-4", "IGHV1-3", "IGHV(III)-2-1", "IGHV1-2",
                        "IGHV(II)-1-1", "IGHV6-1")
+
+    v_family_levels <- c("IGHV1", "IGHV2", "IGHV3", "IGHV4", "IGHV5", "IGHV6", "IGHV7")
 
     # Filter data and calculate stats #
 
@@ -173,10 +177,10 @@ TS_IGHV_usage_prop_with_stats <-
           mapping = aes(x = v_gene, y = proportion, fill = sample),
           width = 0.8,
           position = position_dodge(),
-          color = "black"
+          color = border_colour
         ) +
         ggplot2::scale_fill_manual(
-          values = c("white", "black"),
+          values = fill_colours,
           name = "Sample",
           labels = c(
             paste0(sample1, "\n(n = ", intermediate_export[1,6], ")"),

@@ -35,7 +35,7 @@ TS_run_enrichR <- function(gene_list, plot_enrichr = F, database_to_plot = "GO_B
     })
 
   if(plot_enrichr){
-    print(enrichr::plotEnrich(df = temp.enrichr[[database_to_plot]]))
+    print(enrichR::plotEnrich(df = temp.enrichr[[database_to_plot]]))
   } else{}
 
   return(temp.enrichr)

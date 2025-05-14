@@ -11,7 +11,9 @@ TS_IGHV_usage_prop_with_stats(
   export_pdf = F,
   return_only_data = F,
   ylim_max = NULL,
-  p.adj.method = "hochberg"
+  p.adj.method = "hochberg",
+  fill_colours = c("gray80", "gray50"),
+  border_colour = "black"
 )
 }
 \arguments{

@@ -8,12 +8,14 @@
 #' @param dims What Principal Components to use for calculating the UMAP.
 #' @param group.by Variable to group cells by. Default is Seurat::Idents(), alternatives are any available metadata in the object.
 #' @param colors A vector of colors to use for the group.by parameter. Default is hue_pal()(length of unique values in your group.by parameter)
+#' @param reduction What reduction to use, defaults to "umap". Alternatively, you can use "harmony"
 #' @importFrom magrittr  %>%
 #' @export
 TS_plot_3D <- function(seurat_object = get(default_seurat_object),
                        dims = 1:20,
                        group.by = NULL,
-                       colors = NULL) {
+                       colors = NULL,
+                       reduction = "umap") {
 
   require(plotly)
   require(scales)
@@ -21,8 +23,15 @@ TS_plot_3D <- function(seurat_object = get(default_seurat_object),
   require(Seurat)
 
   message("Calculating UMAP coordinates with 3 components")
-  temp1 <- Seurat::RunUMAP(object = seurat_object, dims = dims, n.components = 3, verbose = F)
 
+  if(reduction == "umap"){
+    temp1 <- Seurat::RunUMAP(object = seurat_object, dims = dims, n.components = 3, verbose = F)
+  }
+  if(reduction == "harmony"){
+    temp1 <- Seurat::RunUMAP(object = seurat_object, dims = dims, n.components = 3, verbose = F, reduction = "harmony")
+  }
+
+  if(reduction == "umap"){
   if(is.null(group.by)){
     df <- data.frame(umap1 = temp1@reductions$umap@cell.embeddings[,1],
                      umap2 = temp1@reductions$umap@cell.embeddings[,2],
@@ -34,6 +43,20 @@ TS_plot_3D <- function(seurat_object = get(default_seurat_object),
                      umap3 = temp1@reductions$umap@cell.embeddings[,3],
                      group.by = as.factor(temp1[[group.by]][,1]))
     }
+  }
+  if(reduction == "harmony"){
+    if(is.null(group.by)){
+      df <- data.frame(umap1 = temp1@reductions$harmony@cell.embeddings[,1],
+                       umap2 = temp1@reductions$harmony@cell.embeddings[,2],
+                       umap3 = temp1@reductions$harmony@cell.embeddings[,3],
+                       group.by = Seurat::Idents(temp1))
+    } else{
+      df <- data.frame(umap1 = temp1@reductions$harmony@cell.embeddings[,1],
+                       umap2 = temp1@reductions$harmony@cell.embeddings[,2],
+                       umap3 = temp1@reductions$harmony@cell.embeddings[,3],
+                       group.by = as.factor(temp1[[group.by]][,1]))
+    }
+  } else{}
 
   if(is.null(colors)){
   message("Drawing 3D plot")

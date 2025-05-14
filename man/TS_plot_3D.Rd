@@ -8,7 +8,8 @@ TS_plot_3D(
   seurat_object = get(default_seurat_object),
   dims = 1:20,
   group.by = NULL,
-  colors = NULL
+  colors = NULL,
+  reduction = "umap"
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ TS_plot_3D(
 \item{group.by}{Variable to group cells by. Default is Seurat::Idents(), alternatives are any available metadata in the object.}
 
 \item{colors}{A vector of colors to use for the group.by parameter. Default is hue_pal()(length of unique values in your group.by parameter)}
+
+\item{reduction}{What reduction to use, defaults to "umap". Alternatively, you can use "harmony"}
 }
 \description{
 Will be coloured according to cluster idents with a scales::hue_pal() colouring scheme.
