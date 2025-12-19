@@ -59,6 +59,33 @@ Repo activity
 
 ## All functions
 
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGHD_family_levels.md)
+  : Human IGHD families in ascending numeric order
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGHD_levels.md)
+  : Human IGHD genes according to their relative locus location
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGHJ_levels.md)
+  : Human IGHJ genes according to their relative locus location
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGHV_family_levels.md)
+  : Human IGHV families in ascending numeric order
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGHV_family_levels_grouped.md)
+  : Human IGHV families in ascending numeric order with IGHV6 and 7
+  grouped
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGHV_levels.md)
+  : Human IGHV genes according to their relative locus location
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGKJ_levels.md)
+  : Human IGKJ genes according to their relative locus location
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGKV_family_levels.md)
+  : Human IGKV families in ascending numeric order
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGKV_levels.md)
+  : Human IGKV genes according to their relative locus location
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGLC_levels.md)
+  : Human IGLC genes according to their relative locus location
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGLJ_levels.md)
+  : Human IGLJ genes according to their relative locus location
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGLV_family_levels.md)
+  : Human IGLV families in ascending numeric order
+- [`as.factor()`](https://timothysundell.github.io/TS/reference/IGLV_levels.md)
+  : Human IGLV genes according to their relative locus location
 - [`TS_DEenrichRPlot()`](https://timothysundell.github.io/TS/reference/TS_DEenrichRPlot.md)
   : A wrapper around the DEnrichRPlot from the 'Seurat' package
 - [`TS_FindConservedMarkers()`](https://timothysundell.github.io/TS/reference/TS_FindConservedMarkers.md)
@@ -70,6 +97,8 @@ Repo activity
   : Plots IGHV usage between two groups using Fisher's Exact Test
 - [`TS_Seurat_from_file()`](https://timothysundell.github.io/TS/reference/TS_Seurat_from_file.md)
   : Process CellRanger output files with Seurat
+- [`TS_add_sig_segments_and_labels()`](https://timothysundell.github.io/TS/reference/TS_add_sig_segments_and_labels.md)
+  : Adds test results to column charts
 - [`TS_calculate_ratios()`](https://timothysundell.github.io/TS/reference/TS_calculate_ratios.md)
   : Calculate light chain ratios of a Seurat object, requires light
   chain data in metadata "light.chain"
@@ -79,6 +108,8 @@ Repo activity
 - [`TS_compare_PC_and_resolution()`](https://timothysundell.github.io/TS/reference/TS_compare_PC_and_resolution.md)
   : Compare number of clusters for combinations of number of PCs and
   resolution
+- [`TS_compute_pairwise_fisher()`](https://timothysundell.github.io/TS/reference/TS_compute_pairwise_fisher.md)
+  : Compute pairwise Fisher tests for gene usage
 - [`TS_count_VDJ()`](https://timothysundell.github.io/TS/reference/TS_count_VDJ.md)
   : Not sure if this function is desirable anymore. So use it at your
   own risk
@@ -115,6 +146,12 @@ Repo activity
   : Plot your Seurat object in 3D.
 - [`TS_plot_IG_usage()`](https://timothysundell.github.io/TS/reference/TS_plot_IG_usage.md)
   : Plots Ig usage between two groups using Fisher's Exact Test
+- [`TS_plot_IG_usage_legacy()`](https://timothysundell.github.io/TS/reference/TS_plot_IG_usage_legacy.md)
+  : Plots Ig usage between two groups using Fisher's Exact Test
+- [`TS_plot_column_chart()`](https://timothysundell.github.io/TS/reference/TS_plot_column_chart.md)
+  : Create column chart with ggplot2
+- [`TS_plot_column_pattern_chart()`](https://timothysundell.github.io/TS/reference/TS_plot_column_pattern_chart.md)
+  : Create column chart with pattern with ggplot2
 - [`TS_plot_counts_boxplot()`](https://timothysundell.github.io/TS/reference/TS_plot_counts_boxplot.md)
   : Plot counts for a gene in a Seurat object as boxplot
 - [`TS_plot_counts_violin()`](https://timothysundell.github.io/TS/reference/TS_plot_counts_violin.md)
@@ -136,4 +173,6 @@ Repo activity
   : Export any plot as svg
 - [`TS_visdimloadings()`](https://timothysundell.github.io/TS/reference/TS_visdimloadings.md)
   : Plot gene contribution to each principal component
+- [`ram_usage()`](https://timothysundell.github.io/TS/reference/ram_usage.md)
+  : RAM usage of objects.
 

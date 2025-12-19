@@ -1,12 +1,12 @@
 # Convert IMGT VDJ data to Cell Ranger–like format
 
-Standardizes IMGT VDJ data to match Cell Ranger expectations. Also
+Standardises IMGT VDJ data to match Cell Ranger expectations. Also
 checks for the presence of a grouping column and required group values.
 
 ## Usage
 
 ``` r
-TS_format_IMGT_to_cellranger(imgt_data, grouping_variable, sample1, sample2)
+TS_format_IMGT_to_cellranger(imgt_data)
 ```
 
 ## Arguments
@@ -14,18 +14,6 @@ TS_format_IMGT_to_cellranger(imgt_data, grouping_variable, sample1, sample2)
 - imgt_data:
 
   Data frame from IMGT.
-
-- grouping_variable:
-
-  Name of the grouping column (character).
-
-- sample1:
-
-  Grouping variable value for sample 1.
-
-- sample2:
-
-  Grouping variable value for sample 2.
 
 ## Value
 

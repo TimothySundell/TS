@@ -6,8 +6,8 @@ Output one or multiple featureplots
 
 ``` r
 TS_featureplots(
-  features,
   seurat_object = get(default_seurat_object),
+  features,
   wrap_plots = TRUE,
   wrap_n_columns = NULL,
   add_dimplot = TRUE,
@@ -20,20 +20,22 @@ TS_featureplots(
   reduction = "umap",
   pt.size = 1,
   order = TRUE,
-  assay = NULL
+  assay = NULL,
+  reverse_y_scale = FALSE,
+  reverse_x_scale = FALSE
 )
 ```
 
 ## Arguments
 
-- features:
-
-  Vector of features to plot.
-
 - seurat_object:
 
   The Seurat object you wish to plot. Defaults to
   "default_seurat_object".
+
+- features:
+
+  Vector of features to plot.
 
 - wrap_plots:
 
@@ -85,3 +87,11 @@ TS_featureplots(
 
   What assay to pull gene expression data from. Defaults to "RNA", as
   this is the convention.
+
+- reverse_y_scale:
+
+  Logical. Should the Y axis be reversed?
+
+- reverse_x_scale:
+
+  Logical. Should the X axis be reversed?

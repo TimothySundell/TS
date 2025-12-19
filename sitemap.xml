@@ -3,14 +3,29 @@
 <url><loc>https://timothysundell.github.io/TS/LICENSE-text.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/authors.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/index.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGHD_family_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGHD_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGHJ_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGHV_family_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGHV_family_levels_grouped.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGHV_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGKJ_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGKV_family_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGKV_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGLC_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGLJ_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGLV_family_levels.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/IGLV_levels.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_DEenrichRPlot.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_FindConservedMarkers.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_Find_DEGs_and_overlap.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_IGHV_usage_prop_with_stats.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_Seurat_from_file.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/TS_add_sig_segments_and_labels.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_calculate_ratios.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_cellnumbers_per_PC_and_resolution.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_compare_PC_and_resolution.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/TS_compute_pairwise_fisher.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_count_VDJ.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_count_VDJ_7.0.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_dataframe_to_fasta.html</loc></url>
@@ -27,6 +42,9 @@
 <url><loc>https://timothysundell.github.io/TS/reference/TS_format_IMGT_to_cellranger.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_plot_3D.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_plot_IG_usage.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/TS_plot_IG_usage_legacy.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/TS_plot_column_chart.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/TS_plot_column_pattern_chart.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_plot_counts_boxplot.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_plot_counts_violin.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_plot_enrichR.html</loc></url>
@@ -38,5 +56,6 @@
 <url><loc>https://timothysundell.github.io/TS/reference/TS_svg_from_plot.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_visdimloadings.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/index.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/ram_usage.html</loc></url>
 </urlset>
 

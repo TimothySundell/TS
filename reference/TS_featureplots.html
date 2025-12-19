@@ -38,8 +38,8 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">TS_featureplots</span><span class="op">(</span></span>
-<span>  <span class="va">features</span>,</span>
 <span>  seurat_object <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">default_seurat_object</span><span class="op">)</span>,</span>
+<span>  <span class="va">features</span>,</span>
 <span>  wrap_plots <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  wrap_n_columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  add_dimplot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -52,7 +52,9 @@
 <span>  reduction <span class="op">=</span> <span class="st">"umap"</span>,</span>
 <span>  pt.size <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  order <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  assay <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  assay <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reverse_y_scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  reverse_x_scale <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -60,12 +62,12 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-features">features<a class="anchor" aria-label="anchor" href="#arg-features"></a></dt>
-<dd><p>Vector of features to plot.</p></dd>
-
-
-<dt id="arg-seurat-object">seurat_object<a class="anchor" aria-label="anchor" href="#arg-seurat-object"></a></dt>
+<dl><dt id="arg-seurat-object">seurat_object<a class="anchor" aria-label="anchor" href="#arg-seurat-object"></a></dt>
 <dd><p>The Seurat object you wish to plot. Defaults to "default_seurat_object".</p></dd>
+
+
+<dt id="arg-features">features<a class="anchor" aria-label="anchor" href="#arg-features"></a></dt>
+<dd><p>Vector of features to plot.</p></dd>
 
 
 <dt id="arg-wrap-plots">wrap_plots<a class="anchor" aria-label="anchor" href="#arg-wrap-plots"></a></dt>
@@ -110,6 +112,14 @@
 
 <dt id="arg-assay">assay<a class="anchor" aria-label="anchor" href="#arg-assay"></a></dt>
 <dd><p>What assay to pull gene expression data from. Defaults to "RNA", as this is the convention.</p></dd>
+
+
+<dt id="arg-reverse-y-scale">reverse_y_scale<a class="anchor" aria-label="anchor" href="#arg-reverse-y-scale"></a></dt>
+<dd><p>Logical. Should the Y axis be reversed?</p></dd>
+
+
+<dt id="arg-reverse-x-scale">reverse_x_scale<a class="anchor" aria-label="anchor" href="#arg-reverse-x-scale"></a></dt>
+<dd><p>Logical. Should the X axis be reversed?</p></dd>
 
 </dl></div>
 
