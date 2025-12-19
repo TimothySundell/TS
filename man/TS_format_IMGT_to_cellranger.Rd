@@ -4,21 +4,15 @@
 \alias{TS_format_IMGT_to_cellranger}
 \title{Convert IMGT VDJ data to Cell Ranger–like format}
 \usage{
-TS_format_IMGT_to_cellranger(imgt_data, grouping_variable, sample1, sample2)
+TS_format_IMGT_to_cellranger(imgt_data)
 }
 \arguments{
 \item{imgt_data}{Data frame from IMGT.}
-
-\item{grouping_variable}{Name of the grouping column (character).}
-
-\item{sample1}{Grouping variable value for sample 1.}
-
-\item{sample2}{Grouping variable value for sample 2.}
 }
 \value{
 A standardized data frame ready for use in \code{TS_plot_IG_usage()}.
 }
 \description{
-Standardizes IMGT VDJ data to match Cell Ranger expectations.
+Standardises IMGT VDJ data to match Cell Ranger expectations.
 Also checks for the presence of a grouping column and required group values.
 }

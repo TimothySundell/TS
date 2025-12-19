@@ -5,8 +5,8 @@
 \title{Output one or multiple featureplots}
 \usage{
 TS_featureplots(
-  features,
   seurat_object = get(default_seurat_object),
+  features,
   wrap_plots = TRUE,
   wrap_n_columns = NULL,
   add_dimplot = TRUE,
@@ -19,13 +19,15 @@ TS_featureplots(
   reduction = "umap",
   pt.size = 1,
   order = TRUE,
-  assay = NULL
+  assay = NULL,
+  reverse_y_scale = FALSE,
+  reverse_x_scale = FALSE
 )
 }
 \arguments{
-\item{features}{Vector of features to plot.}
-
 \item{seurat_object}{The Seurat object you wish to plot. Defaults to "default_seurat_object".}
+
+\item{features}{Vector of features to plot.}
 
 \item{wrap_plots}{Whether to wrap plots into one by patchwork::wrap_plots(). Defaults to TRUE.}
 
@@ -48,6 +50,10 @@ TS_featureplots(
 \item{order}{Whether to plot positive cells last, e.g. on top, default = TRUE.}
 
 \item{assay}{What assay to pull gene expression data from. Defaults to "RNA", as this is the convention.}
+
+\item{reverse_y_scale}{Logical. Should the Y axis be reversed?}
+
+\item{reverse_x_scale}{Logical. Should the X axis be reversed?}
 }
 \description{
 Output one or multiple featureplots

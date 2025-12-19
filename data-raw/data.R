@@ -35,9 +35,7 @@ IGHD_levels <- c("IGHD1-1", "IGHD2-2", "IGHD3-3", "IGHD4-4", "IGHD5-5", "IGHD6-6
                  "IGHD5-18", "IGHD6-19", "IGHD1-20", "IGHD2-21", "IGHD3-22", "IGHD4-23", "IGHD5-24", "IGHD6-25",
                  "IGHD1-26", "IGHD7-27")
 
-IGHD_family_levels <- c("IGHD1", "IGHD2", "IGHD3", "IGHD4", "IGHD5", "IGHD6", "IGHD1", "IGHD2", "IGHD3", "IGHD3",
-                        "IGHD4", "IGHD5", "IGHD6", "IGHD1", "IGHD2", "IGHD3", "IGHD4", "IGHD5", "IGHD6", "IGHD1",
-                        "IGHD2", "IGHD3", "IGHD4", "IGHD5", "IGHD6", "IGHD1", "IGHD7")
+IGHD_family_levels <- c("IGHD1", "IGHD2", "IGHD3", "IGHD4", "IGHD5", "IGHD6", "IGHD7")
 
 IGHJ_levels <- c("IGHJ1", "IGHJ2", "IGHJ3", "IGHJ4", "IGHJ5", "IGHJ6")
 
@@ -72,7 +70,7 @@ IGLJ_levels <- c("IGLJ1", "IGLJ2", "IGLJ3", "IGLJ4", "IGLJ5", "IGLJ6", "IGLJ7")
 
 IGLC_levels <- c("IGLC1", "IGLC2", "IGLC3", "IGLC4", "IGLC5", "IGLC6", "IGLC7")
 
-
+# Export the data
 usethis::use_data(
   IGHV_levels,
   IGHV_family_levels,
