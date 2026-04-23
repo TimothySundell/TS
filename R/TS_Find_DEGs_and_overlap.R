@@ -10,7 +10,6 @@
 #'  - Seurat
 #'  - magrittr
 #'  - tidyverse
-#'  - VennDetail
 #'
 #'  Automatically filters resulting DEG list so that '0 < p_val_adj > 0.05.
 #'
@@ -27,8 +26,19 @@
 #' @param height Height of saved Venn diagram. Defaults to '5.83 inches', which is A5 landscape format.
 #' @importFrom magrittr  %>%
 #' @export
-TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_variable_name = "tested_population", only_pos_markers = T, test_use = "wilcox", plot_venn = F, export_venn = F, filename_pdf = "Venn_output", width = 8.27, heigth = 5.83){
-
+TS_Find_DEGs_and_overlap <- function(
+  seurat_object,
+  ident.1,
+  ident.2,
+  grouping_variable_name = "tested_population",
+  only_pos_markers = T,
+  test_use = "wilcox",
+  plot_venn = F,
+  export_venn = F,
+  filename_pdf = "Venn_output",
+  width = 8.27,
+  heigth = 5.83
+) {
   # 240528
   # Changed code so that p_val_adj = 0, no longer is filtered out.
   # This is because those that are = 0 are p-values smaller than the .Machine$double.xmin value (~ 2.2e-308)
@@ -36,7 +46,6 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
   library(Seurat)
   library(magrittr)
   library(dplyr)
-  library(VennDetail)
 
   name_1 <- paste0("Upregulated_", ident.1)
   name_2 <- paste0("Upregulated_", ident.2)
@@ -53,12 +62,19 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
       ident.2 = ident.2,
       only.pos = only_pos_markers,
       test.use = test_use
-    ) %>% dplyr::filter(p_val_adj < 0.05) %>%
-    dplyr::mutate(gene = rownames(.),
-                  gene_type = factor(case_when(gene %in% molecules$tf_toronto$tf_toronto ~ "TF",
-                                               gene %in% molecules$survival_no_tfs$survival_no_tfs ~ "Survival",
-                                               .default = "Other"),
-                                     levels = c("TF", "Survival", "Other")))
+    ) %>%
+    dplyr::filter(p_val_adj < 0.05) %>%
+    dplyr::mutate(
+      gene = rownames(.),
+      gene_type = factor(
+        case_when(
+          gene %in% molecules$tf_toronto$tf_toronto ~ "TF",
+          gene %in% molecules$survival_no_tfs$survival_no_tfs ~ "Survival",
+          .default = "Other"
+        ),
+        levels = c("TF", "Survival", "Other")
+      )
+    )
 
   cat("\nFinding genes upregulated in cluster", ident.2, "\n")
   # Find upregulated genes in ident.2
@@ -69,16 +85,29 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
       ident.2 = ident.1,
       only.pos = only_pos_markers,
       test.use = test_use
-    ) %>% dplyr::filter(p_val_adj < 0.05) %>%
-    dplyr::mutate(gene = rownames(.),
-                  gene_type = factor(case_when(gene %in% molecules$tf_toronto$tf_toronto ~ "TF",
-                                               gene %in% molecules$survival_no_tfs$survival_no_tfs ~ "Survival",
-                                               .default = "Other"),
-                                     levels = c("TF", "Survival", "Other")))
+    ) %>%
+    dplyr::filter(p_val_adj < 0.05) %>%
+    dplyr::mutate(
+      gene = rownames(.),
+      gene_type = factor(
+        case_when(
+          gene %in% molecules$tf_toronto$tf_toronto ~ "TF",
+          gene %in% molecules$survival_no_tfs$survival_no_tfs ~ "Survival",
+          .default = "Other"
+        ),
+        levels = c("TF", "Survival", "Other")
+      )
+    )
 
   # Find shared markers
   ## Add metadata to allow analyses
-  cat("\nFinding genes shared between cluster", ident.1, "and cluster", ident.2, "\n")
+  cat(
+    "\nFinding genes shared between cluster",
+    ident.1,
+    "and cluster",
+    ident.2,
+    "\n"
+  )
   seurat_object <-
     Seurat::AddMetaData(
       object = seurat_object,
@@ -107,30 +136,29 @@ TS_Find_DEGs_and_overlap <- function(seurat_object, ident.1, ident.2, grouping_v
   res[[3]] <- res[[3]] %>%
     dplyr::filter((!!temp_colname1 < 0.05))
 
-  if(only_pos_markers) {
+  if (only_pos_markers) {
     temp_colname2 <- as.name(colnames(res[[3]][2]))
     res[[3]] <- res[[3]] %>% dplyr::filter(!!temp_colname2 > 0)
-  } else{}
+  } else {}
 
   # Calculate Venn diagram information
-  cat("Drawing Venn diagram")
-  res[["Venn.diagram"]] <-
-    VennDetail::venndetail(x = lapply(
-      X = res[1:3],
-      FUN = function(x) {
-        rownames(x)
-      }
-    ))
-  if(plot_venn){
-    grid::grid.newpage()
-    graphics::plot(res[[4]])
-  } else{}
-  if(export_venn){
-    grDevices::pdf(file = paste0(getwd(), "/", filename_pdf, ".pdf"), width = width, height = height)
-    graphics::plot(res[[4]])
-    grDevices::dev.off()
-  } else{}
+  # cat("Drawing Venn diagram")
+  # res[["Venn.diagram"]] <-
+  #   VennDetail::venndetail(x = lapply(
+  #     X = res[1:3],
+  #     FUN = function(x) {
+  #       rownames(x)
+  #     }
+  #   ))
+  # if(plot_venn){
+  #   grid::grid.newpage()
+  #   graphics::plot(res[[4]])
+  # } else{}
+  # if(export_venn){
+  #   grDevices::pdf(file = paste0(getwd(), "/", filename_pdf, ".pdf"), width = width, height = height)
+  #   graphics::plot(res[[4]])
+  #   grDevices::dev.off()
+  # } else{}
 
   return(res)
-
 }

@@ -17,7 +17,7 @@
 #' @param reverse_x_scale Logical. Should the X axis be reversed?
 #' @export
 TS_featureplots <- function(
-    seurat_object = get(default_seurat_object),
+    seurat_object,
     features,
     wrap_plots = TRUE,
     wrap_n_columns = NULL,
@@ -45,7 +45,7 @@ TS_featureplots <- function(
     reduction = "umap",
     pt.size = 1,
     order = TRUE,
-    assay = NULL,
+    assay = "RNA",
     reverse_y_scale = FALSE,
     reverse_x_scale = FALSE) {
 
@@ -53,11 +53,20 @@ TS_featureplots <- function(
     library(Seurat)
   }
 
-  if(is.null(assay)) {
-    Seurat::DefaultAssay(seurat_object) <- "RNA"
-  } else{
-    Seurat::DefaultAssay(seurat_object) <- assay
+  Seurat::DefaultAssay(seurat_object) <- assay
+
+  # Validate features
+  assay_rownames <- rownames(seurat_object[[assay]])
+  features_present <- features[features %in% assay_rownames]
+  features_not_present <- base::setdiff(features, features_present)
+
+  if (length(features_present) == 0) stop("None of the requested features are present in the assay.")
+
+  if (length(features_not_present) > 0) {
+    message("These features were not found in the ", assay, " assay: ",
+            paste(features_not_present, collapse = ", "))
   }
+
 
   plot_list <- list()
 
@@ -78,7 +87,7 @@ TS_featureplots <- function(
     plot_list[["Dimplot"]] <- p
   }
 
-  for(gene in features){
+  for(gene in features_present){
     p <- Seurat::FeaturePlot(
       object = seurat_object,
       features = gene,
