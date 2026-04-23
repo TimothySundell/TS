@@ -17,8 +17,6 @@ Depends on:
 
 - tidyverse
 
-- VennDetail
-
 Automatically filters resulting DEG list so that '0 \< p_val_adj \>
 0.05.
 

@@ -65,8 +65,8 @@ TS_Seurat_from_file(
 
 - project_name:
 
-  Required by Seurat. Defaults to the same value as sample_ID. Added
-  automatically as metadata in column "orig.ident"
+  Required by Seurat. Defaults to the same value as 'sample_ID'. Added
+  automatically as metadata in column 'orig.ident'
 
 - min.cells:
 

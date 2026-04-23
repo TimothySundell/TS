@@ -48,16 +48,8 @@
 - [`TS_cellnumbers_per_PC_and_resolution()`](https://timothysundell.github.io/TS/reference/TS_cellnumbers_per_PC_and_resolution.md)
   : Calculate cellnumbers per cluster for each combination of 'number or
   PCs' and 'resolution'
-- [`TS_compare_PC_and_resolution()`](https://timothysundell.github.io/TS/reference/TS_compare_PC_and_resolution.md)
-  : Compare number of clusters for combinations of number of PCs and
-  resolution
 - [`TS_compute_pairwise_fisher()`](https://timothysundell.github.io/TS/reference/TS_compute_pairwise_fisher.md)
   : Compute pairwise Fisher tests for gene usage
-- [`TS_count_VDJ()`](https://timothysundell.github.io/TS/reference/TS_count_VDJ.md)
-  : Not sure if this function is desirable anymore. So use it at your
-  own risk
-- [`TS_count_VDJ_7.0()`](https://timothysundell.github.io/TS/reference/TS_count_VDJ_7.0.md)
-  : Count VDJ from Cellranger 7.0
 - [`TS_dataframe_to_fasta()`](https://timothysundell.github.io/TS/reference/TS_dataframe_to_fasta.md)
   : Converts a dataframe and saves it in Fasta format
 - [`TS_export_cluster_ids()`](https://timothysundell.github.io/TS/reference/TS_export_cluster_ids.md)
@@ -72,17 +64,8 @@
 - [`TS_extract_ranked_genes_per_PC()`](https://timothysundell.github.io/TS/reference/TS_extract_ranked_genes_per_PC.md)
   : Extract an ordered list of feature importance for each of the first
   50 principal components
-- [`TS_featureplot_to_pdf()`](https://timothysundell.github.io/TS/reference/TS_featureplot_to_pdf.md)
-  : Export featureplot as pdf to your working directory
-- [`TS_featureplot_to_pdf_A4()`](https://timothysundell.github.io/TS/reference/TS_featureplot_to_pdf_A4.md)
-  : Export featureplot to pdf in A4 format
-- [`TS_featureplot_to_pdf_no_leg_no_axes()`](https://timothysundell.github.io/TS/reference/TS_featureplot_to_pdf_no_leg_no_axes.md)
-  : Export featureplot to pdf without legend and axes
 - [`TS_featureplots()`](https://timothysundell.github.io/TS/reference/TS_featureplots.md)
   : Output one or multiple featureplots
-- [`TS_filter_marker_list()`](https://timothysundell.github.io/TS/reference/TS_filter_marker_list.md)
-  : Filter list of markers from FindMarkers function, needs to be output
-  into new df
 - [`TS_format_IMGT_to_cellranger()`](https://timothysundell.github.io/TS/reference/TS_format_IMGT_to_cellranger.md)
   : Convert IMGT VDJ data to Cell Ranger–like format
 - [`TS_plot_3D()`](https://timothysundell.github.io/TS/reference/TS_plot_3D.md)

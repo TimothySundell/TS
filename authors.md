@@ -7,13 +7,13 @@
 
 ## Citation
 
-Sundell T (2025). *TS: Functions for a better life.*. R package version
+Sundell T (2026). *TS: Functions for a better life.*. R package version
 1.0, <https://timothysundell.github.io/TS/>.
 
     @Manual{,
       title = {TS: Functions for a better life.},
       author = {Timothy Sundell},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.0},
       url = {https://timothysundell.github.io/TS/},
     }

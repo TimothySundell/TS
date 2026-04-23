@@ -6,7 +6,7 @@ Output one or multiple featureplots
 
 ``` r
 TS_featureplots(
-  seurat_object = get(default_seurat_object),
+  seurat_object,
   features,
   wrap_plots = TRUE,
   wrap_n_columns = NULL,
@@ -20,7 +20,7 @@ TS_featureplots(
   reduction = "umap",
   pt.size = 1,
   order = TRUE,
-  assay = NULL,
+  assay = "RNA",
   reverse_y_scale = FALSE,
   reverse_x_scale = FALSE
 )
@@ -44,11 +44,11 @@ TS_featureplots(
 
 - wrap_n_columns:
 
-  If wrap_plots = T, how many columns do you want for the final plot.
+  If 'wrap_plots = T', how many columns do you want for the final plot.
 
 - add_dimplot:
 
-  If wrap_plots = T, whether to include Seurat::DimPlot() as the first
+  If 'wrap_plots = T', whether to include Seurat::DimPlot() as the first
   panel. Defaults to TRUE
 
 - dimplot_group.by:
@@ -63,7 +63,7 @@ TS_featureplots(
 
 - dimplot_label:
 
-  Whether to label the DimPlot by dimplot_group.by. Defaults to TRUE.
+  Whether to label the DimPlot by 'dimplot_group.by'. Defaults to TRUE.
 
 - expression_cols:
 

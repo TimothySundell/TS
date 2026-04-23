@@ -29,7 +29,8 @@ TS_run_enrichR(
 
 - plot_enrichr:
 
-  Whether to plot the output using the enrichR function plotEnrich.
+  Whether to plot the output using the enrichR function
+  [enrichR::plotEnrich](https://rdrr.io/pkg/enrichR/man/plotEnrich.html).
   Defaults to 'FALSE'
 
 - database_to_plot:
