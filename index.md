@@ -22,6 +22,14 @@ section in the top right corner of this webpage.
 
 To install the latest version of the TS package:
 
+Pak (recommended)
+
+``` r
+pak::pkg_install("TimothySundell/TS")
+```
+
+Devtools
+
 ``` r
 devtools::install_github("TimothySundell/TS")
 ```
