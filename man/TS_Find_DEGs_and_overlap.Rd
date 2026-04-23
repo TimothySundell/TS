@@ -54,7 +54,6 @@ Depends on:
 \item Seurat
 \item magrittr
 \item tidyverse
-\item VennDetail
 }
 
 Automatically filters resulting DEG list so that '0 < p_val_adj > 0.05.

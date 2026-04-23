@@ -34,7 +34,7 @@ TS_Seurat_from_file(
 
 \item{additional_markers}{Additional gene names to plot to aid in exclusion of unwanted cell types. Default markers are "percent.mt", "percent.ribo", "percent.malat1", "CD19", "CD3E", "CD14", "CD56".}
 
-\item{project_name}{Required by Seurat. Defaults to the same value as \link{sample_ID}. Added automatically as metadata in column "orig.ident"}
+\item{project_name}{Required by Seurat. Defaults to the same value as 'sample_ID'. Added automatically as metadata in column 'orig.ident'}
 
 \item{min.cells}{Include features/genes detected in at least this many cells. Defaults to 3.}
 

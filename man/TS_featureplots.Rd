@@ -5,7 +5,7 @@
 \title{Output one or multiple featureplots}
 \usage{
 TS_featureplots(
-  seurat_object = get(default_seurat_object),
+  seurat_object,
   features,
   wrap_plots = TRUE,
   wrap_n_columns = NULL,
@@ -19,7 +19,7 @@ TS_featureplots(
   reduction = "umap",
   pt.size = 1,
   order = TRUE,
-  assay = NULL,
+  assay = "RNA",
   reverse_y_scale = FALSE,
   reverse_x_scale = FALSE
 )
@@ -31,15 +31,15 @@ TS_featureplots(
 
 \item{wrap_plots}{Whether to wrap plots into one by patchwork::wrap_plots(). Defaults to TRUE.}
 
-\item{wrap_n_columns}{If \link{wrap_plots = T}, how many columns do you want for the final plot.}
+\item{wrap_n_columns}{If 'wrap_plots = T', how many columns do you want for the final plot.}
 
-\item{add_dimplot}{If \link{wrap_plots = T}, whether to include Seurat::DimPlot() as the first panel. Defaults to TRUE}
+\item{add_dimplot}{If 'wrap_plots = T', whether to include Seurat::DimPlot() as the first panel. Defaults to TRUE}
 
 \item{dimplot_group.by}{What metadata to group cells by. Defaults to Seurat::Idents(seurat_object)}
 
 \item{dimplot_cols}{Colours to use for the Seurat::DimPlot(). Defaults to scales::hue_pal()(length(levels(Seurat::Idents(seurat_object))))}
 
-\item{dimplot_label}{Whether to label the DimPlot by \link{dimplot_group.by}. Defaults to TRUE.}
+\item{dimplot_label}{Whether to label the DimPlot by 'dimplot_group.by'. Defaults to TRUE.}
 
 \item{expression_cols}{Vector of colors to use (low->high), defaults to a 15-step gradient from "lightgray" to "#950028"}
 
