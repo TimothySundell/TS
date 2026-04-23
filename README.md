@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# TS - A collection of QoL functions <a href="https://github.com/TimothySundell/TS"><img src="man/figures/TS_logo_DALL-E_no_background.png" align="right" height="138" /></a>
+# TS - A collection of QoL functions <a href="https://github.com/TimothySundell/TS"><img src="man/figures/TS_logo_DALL-E_no_background.png" align="right" height="138"/></a>
 
 <!-- badges: start -->
 
@@ -11,6 +11,7 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://img.shields.io/github/languages/code-size/TimothySundell/TS.svg)](https://github.com/TimothySundell/TS)
 [![](https://img.shields.io/badge/doi-10.1093/bfgp/elac044-green.svg)](https://doi.org/10.1093/bfgp/elac044)
+
 <!-- badges: end -->
 
 TS was written to improve the quality of life for its creator, maybe it
@@ -34,6 +35,14 @@ section in the top right corner of this webpage.
 ## Installation
 
 To install the latest version of the TS package:
+
+Pak (recommended)
+
+``` r
+pak::pkg_install("TimothySundell/TS")
+```
+
+Devtools
 
 ``` r
 devtools::install_github("TimothySundell/TS")
