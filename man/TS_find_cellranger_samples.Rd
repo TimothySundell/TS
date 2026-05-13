@@ -27,14 +27,19 @@ for. Defaults to Cell Ranger's \code{filtered_feature_bc_matrix} and
 }
 \value{
 A tibble with one row per detected sample matrix and columns
-\code{sample_id}, \code{sample_root}, \code{matrix_dir}, \code{vdj_b_dir}, \code{vdj_t_dir}, and
-\code{detection_note}.
+\code{sample_id}, \code{sample_root}, \code{outs_dir}, \code{matrix_dir}, \code{vdj_b_dir},
+\code{vdj_t_dir}, and \code{detection_note}.
 }
 \description{
 Recursively searches a project folder for Cell Ranger matrix directories and
 infers the corresponding sample names. The function is designed for common
-\code{cellranger multi} layouts such as \code{outs/per_sample_outs/<sample>} and for
-project folders organised as \code{project/<sample>/cellranger_outs}.
+\verb{cellranger multi} layouts such as \verb{outs/per_sample_outs/<sample>} and for
+project folders organised as \verb{project/<sample>/cellranger_outs}.
+
+The filtered gene expression matrix is detected at sample level. V(D)J
+directories are detected at run level, for example \code{outs/vdj_b} and
+\code{outs/vdj_t}, because \verb{cellranger multi} stores the unfiltered
+\verb{all_contig*} files there rather than in \verb{per_sample_outs/<sample>}.
 }
 \examples{
 project <- file.path(tempdir(), "cellranger_project")
@@ -43,4 +48,5 @@ dir.create(matrix_dir, recursive = TRUE, showWarnings = FALSE)
 file.create(file.path(matrix_dir, c("barcodes.tsv.gz", "features.tsv.gz", "matrix.mtx.gz")))
 
 TS_find_cellranger_samples(project)
+
 }
