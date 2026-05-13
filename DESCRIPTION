@@ -13,6 +13,7 @@ Imports:
     clustree,
     dplyr,
     enrichR,
+    fastcluster,
     forcats,
     ggpattern,
     ggplot2,
