@@ -15,7 +15,7 @@ TS_run_enrichR(
 \arguments{
 \item{gene_list}{Character vector containing genes to test}
 
-\item{plot_enrichr}{Whether to plot the output using the enrichR function \link[enrichR:plotEnrich]{enrichR::plotEnrich}. Defaults to 'FALSE'}
+\item{plot_enrichr}{Whether to plot the output using the enrichR function \link[enrichR:plotEnrich]{plotEnrich}. Defaults to 'FALSE'}
 
 \item{database_to_plot}{What database to plot the output from. Defaults to '"GO_Biological_Process_2023"'}
 

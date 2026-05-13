@@ -9,3 +9,4 @@
 ^dev$
 ^\.positai$
 ^\.claude$
+^LICENSE\.md$
