@@ -6,6 +6,11 @@ common `cellranger multi` layouts such as
 `outs/per_sample_outs/<sample>` and for project folders organised as
 `project/<sample>/cellranger_outs`.
 
+The filtered gene expression matrix is detected at sample level. V(D)J
+directories are detected at run level, for example `outs/vdj_b` and
+`outs/vdj_t`, because `cellranger multi` stores the unfiltered
+`all_contig*` files there rather than in `per_sample_outs/<sample>`.
+
 ## Usage
 
 ``` r
@@ -42,8 +47,8 @@ TS_find_cellranger_samples(
 ## Value
 
 A tibble with one row per detected sample matrix and columns
-`sample_id`, `sample_root`, `matrix_dir`, `vdj_b_dir`, `vdj_t_dir`, and
-`detection_note`.
+`sample_id`, `sample_root`, `outs_dir`, `matrix_dir`, `vdj_b_dir`,
+`vdj_t_dir`, and `detection_note`.
 
 ## Examples
 
@@ -55,8 +60,8 @@ file.create(file.path(matrix_dir, c("barcodes.tsv.gz", "features.tsv.gz", "matri
 #> [1] TRUE TRUE TRUE
 
 TS_find_cellranger_samples(project)
-#> # A tibble: 1 × 6
-#>   sample_id sample_root            matrix_dir vdj_b_dir vdj_t_dir detection_note
-#>   <chr>     <chr>                  <chr>      <chr>     <chr>     <chr>         
-#> 1 sampleA   /tmp/RtmpBd9EVR/cellr… /tmp/Rtmp… NA        NA        cellranger_ou…
+#> # A tibble: 1 × 7
+#>   sample_id sample_root   outs_dir matrix_dir vdj_b_dir vdj_t_dir detection_note
+#>   <chr>     <chr>         <chr>    <chr>      <chr>     <chr>     <chr>         
+#> 1 sampleA   /tmp/Rtmp9Vn… /tmp/Rt… /tmp/Rtmp… NA        NA        cellranger_ou…
 ```

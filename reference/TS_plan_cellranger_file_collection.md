@@ -1,11 +1,12 @@
 # Plan collection of selected Cell Ranger files
 
 Builds a copy plan for selected Cell Ranger files without changing the
-file system. Matrix files are planned into per-sample
-`filtered_feature_bc_matrix` directories with their original filenames,
-so they remain directly readable by Seurat. V(D)J files are planned into
-per-sample `vdj_b` and `vdj_t` directories with the sample name
-prepended.
+file system. Matrix files are planned from sample-level filtered matrix
+output into per-sample `filtered_feature_bc_matrix` directories with
+their original filenames, so they remain directly readable by Seurat.
+V(D)J files are planned from run-level unfiltered `outs/vdj_b` and
+`outs/vdj_t` directories into per-sample `vdj_b` and `vdj_t` directories
+with the sample name prepended.
 
 ## Usage
 
@@ -43,9 +44,9 @@ TS_plan_cellranger_file_collection(
 
 - strict:
 
-  Logical. If `TRUE`, existing V(D)J directories must contain all
-  requested V(D)J files. If `FALSE`, missing V(D)J files are recorded in
-  the plan and available files can still be copied.
+  Logical. If `TRUE`, existing raw V(D)J directories must contain all
+  requested `all_contig*` files. If `FALSE`, missing V(D)J files are
+  recorded in the plan and available files can still be copied.
 
 - ...:
 
@@ -76,9 +77,9 @@ plan
 #> # A tibble: 3 × 12
 #>   sample_id file_group           source_dir source_filename source_path dest_dir
 #>   <chr>     <chr>                <chr>      <chr>           <chr>       <chr>   
-#> 1 sampleA   filtered_feature_bc… /tmp/Rtmp… barcodes.tsv.gz /tmp/RtmpB… /tmp/Rt…
-#> 2 sampleA   filtered_feature_bc… /tmp/Rtmp… features.tsv.gz /tmp/RtmpB… /tmp/Rt…
-#> 3 sampleA   filtered_feature_bc… /tmp/Rtmp… matrix.mtx.gz   /tmp/RtmpB… /tmp/Rt…
+#> 1 sampleA   filtered_feature_bc… /tmp/Rtmp… barcodes.tsv.gz /tmp/Rtmp9… /tmp/Rt…
+#> 2 sampleA   filtered_feature_bc… /tmp/Rtmp… features.tsv.gz /tmp/Rtmp9… /tmp/Rt…
+#> 3 sampleA   filtered_feature_bc… /tmp/Rtmp… matrix.mtx.gz   /tmp/Rtmp9… /tmp/Rt…
 #> # ℹ 6 more variables: dest_filename <chr>, dest_path <chr>, required <lgl>,
 #> #   source_exists <lgl>, copy <lgl>, status <chr>
 ```
