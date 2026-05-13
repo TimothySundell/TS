@@ -63,5 +63,5 @@ TS_find_cellranger_samples(project)
 #> # A tibble: 1 × 7
 #>   sample_id sample_root   outs_dir matrix_dir vdj_b_dir vdj_t_dir detection_note
 #>   <chr>     <chr>         <chr>    <chr>      <chr>     <chr>     <chr>         
-#> 1 sampleA   /tmp/Rtmp9Vn… /tmp/Rt… /tmp/Rtmp… NA        NA        cellranger_ou…
+#> 1 sampleA   /tmp/RtmpBku… /tmp/Rt… /tmp/Rtmp… NA        NA        cellranger_ou…
 ```

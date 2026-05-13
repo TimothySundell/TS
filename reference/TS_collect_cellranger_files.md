@@ -85,8 +85,8 @@ TS_collect_cellranger_files(
 #> # A tibble: 3 × 5
 #>   sample_id file_group                 source_path              dest_path status
 #>   <chr>     <chr>                      <chr>                    <chr>     <chr> 
-#> 1 sampleA   filtered_feature_bc_matrix /tmp/Rtmp9VnWrG/cellran… /tmp/Rtm… ready 
-#> 2 sampleA   filtered_feature_bc_matrix /tmp/Rtmp9VnWrG/cellran… /tmp/Rtm… ready 
-#> 3 sampleA   filtered_feature_bc_matrix /tmp/Rtmp9VnWrG/cellran… /tmp/Rtm… ready 
+#> 1 sampleA   filtered_feature_bc_matrix /tmp/RtmpBkuW1o/cellran… /tmp/Rtm… ready 
+#> 2 sampleA   filtered_feature_bc_matrix /tmp/RtmpBkuW1o/cellran… /tmp/Rtm… ready 
+#> 3 sampleA   filtered_feature_bc_matrix /tmp/RtmpBkuW1o/cellran… /tmp/Rtm… ready 
 #> Dry run only. No directories were created and no files were copied.
 ```
