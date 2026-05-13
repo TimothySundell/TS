@@ -26,9 +26,9 @@ See \code{\link[=TS_find_cellranger_samples]{TS_find_cellranger_samples()}}.}
 \item{overwrite}{Logical. If \code{FALSE}, the function errors when planned target
 files already exist.}
 
-\item{strict}{Logical. If \code{TRUE}, existing V(D)J directories must contain all
-requested V(D)J files. If \code{FALSE}, missing V(D)J files are recorded in the
-plan and available files can still be copied.}
+\item{strict}{Logical. If \code{TRUE}, existing raw V(D)J directories must contain
+all requested \verb{all_contig*} files. If \code{FALSE}, missing V(D)J files are
+recorded in the plan and available files can still be copied.}
 
 \item{...}{Additional arguments passed to \code{\link[=TS_find_cellranger_samples]{TS_find_cellranger_samples()}}, such
 as \code{matrix_dir_names} or \code{vdj_dir_names}.}
@@ -40,10 +40,12 @@ include \code{sample_id}, \code{file_group}, \code{source_path}, \code{dest_path
 }
 \description{
 Builds a copy plan for selected Cell Ranger files without changing the file
-system. Matrix files are planned into per-sample
-\code{filtered_feature_bc_matrix} directories with their original filenames, so
-they remain directly readable by Seurat. V(D)J files are planned into
-per-sample \code{vdj_b} and \code{vdj_t} directories with the sample name prepended.
+system. Matrix files are planned from sample-level filtered matrix output
+into per-sample \code{filtered_feature_bc_matrix} directories with their original
+filenames, so they remain directly readable by Seurat. V(D)J files are
+planned from run-level unfiltered \code{outs/vdj_b} and \code{outs/vdj_t} directories
+into per-sample \code{vdj_b} and \code{vdj_t} directories with the sample name
+prepended.
 }
 \examples{
 project <- file.path(tempdir(), "cellranger_project_plan")
@@ -56,4 +58,5 @@ plan <- TS_plan_cellranger_file_collection(
   dest_dir = file.path(tempdir(), "cellranger_transfer_plan")
 )
 plan
+
 }

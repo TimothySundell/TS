@@ -32,9 +32,9 @@ error before copying starts.}
 \item{execute}{Logical. If \code{FALSE}, return the planned copy operations without
 creating directories or copying files.}
 
-\item{strict}{Logical. If \code{TRUE}, existing V(D)J directories must contain all
-requested V(D)J files. If \code{FALSE}, missing V(D)J files are skipped and
-recorded in the returned plan.}
+\item{strict}{Logical. If \code{TRUE}, existing raw V(D)J directories must contain
+all requested \verb{all_contig*} files. If \code{FALSE}, missing V(D)J files are
+skipped and recorded in the returned plan.}
 
 \item{...}{Additional arguments passed to \code{\link[=TS_find_cellranger_samples]{TS_find_cellranger_samples()}}, such
 as \code{matrix_dir_names} or \code{vdj_dir_names}.}
@@ -44,9 +44,10 @@ Invisibly returns the copy plan tibble.
 }
 \description{
 Copies selected Cell Ranger files into a transfer-friendly destination
-directory. Each sample receives its own folder, matrix filenames are kept
-unchanged for Seurat compatibility, and V(D)J files are renamed with the
-sample ID as a prefix.
+directory. Each sample receives its own folder. Filtered matrix filenames are
+kept unchanged for Seurat compatibility, and unfiltered V(D)J \verb{all_contig*}
+files are renamed with the sample ID as a prefix. Per-sample V(D)J folders
+are intentionally not used because they contain filtered contig outputs.
 }
 \examples{
 project <- file.path(tempdir(), "cellranger_project_collect")
@@ -59,4 +60,5 @@ TS_collect_cellranger_files(
   dest_dir = file.path(tempdir(), "cellranger_transfer_collect"),
   execute = FALSE
 )
+
 }

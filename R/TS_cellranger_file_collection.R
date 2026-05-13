@@ -6,6 +6,11 @@
 #' `cellranger multi` layouts such as `outs/per_sample_outs/<sample>` and for
 #' project folders organised as `project/<sample>/cellranger_outs`.
 #'
+#' The filtered gene expression matrix is detected at sample level. V(D)J
+#' directories are detected at run level, for example `outs/vdj_b` and
+#' `outs/vdj_t`, because `cellranger multi` stores the unfiltered
+#' `all_contig*` files there rather than in `per_sample_outs/<sample>`.
+#'
 #' @param input_dir Character scalar. Project or Cell Ranger output directory to
 #'   search.
 #' @param sample_regex Optional regular expression used to extract sample names
@@ -17,8 +22,8 @@
 #' @param vdj_dir_names Character vector of V(D)J directory names to detect.
 #'
 #' @return A tibble with one row per detected sample matrix and columns
-#'   `sample_id`, `sample_root`, `matrix_dir`, `vdj_b_dir`, `vdj_t_dir`, and
-#'   `detection_note`.
+#'   `sample_id`, `sample_root`, `outs_dir`, `matrix_dir`, `vdj_b_dir`,
+#'   `vdj_t_dir`, and `detection_note`.
 #'
 #' @examples
 #' project <- file.path(tempdir(), "cellranger_project")
@@ -68,6 +73,7 @@ TS_find_cellranger_samples <- function(
     return(tibble::tibble(
       sample_id = character(),
       sample_root = character(),
+      outs_dir = character(),
       matrix_dir = character(),
       vdj_b_dir = character(),
       vdj_t_dir = character(),
@@ -80,14 +86,15 @@ TS_find_cellranger_samples <- function(
       matrix_dir,
       sample_regex = sample_regex
     )
-    vdj_dirs <- .TS_find_vdj_dirs(
-      inferred$sample_root,
+    vdj_dirs <- .TS_find_raw_vdj_dirs(
+      inferred$outs_dir,
       vdj_dir_names = vdj_dir_names
     )
 
     tibble::tibble(
       sample_id = inferred$sample_id,
       sample_root = inferred$sample_root,
+      outs_dir = inferred$outs_dir,
       matrix_dir = matrix_dir,
       vdj_b_dir = .TS_first_or_na(vdj_dirs[basename(vdj_dirs) == "vdj_b"]),
       vdj_t_dir = .TS_first_or_na(vdj_dirs[basename(vdj_dirs) == "vdj_t"]),
@@ -102,10 +109,12 @@ TS_find_cellranger_samples <- function(
 #'
 #' @description
 #' Builds a copy plan for selected Cell Ranger files without changing the file
-#' system. Matrix files are planned into per-sample
-#' `filtered_feature_bc_matrix` directories with their original filenames, so
-#' they remain directly readable by Seurat. V(D)J files are planned into
-#' per-sample `vdj_b` and `vdj_t` directories with the sample name prepended.
+#' system. Matrix files are planned from sample-level filtered matrix output
+#' into per-sample `filtered_feature_bc_matrix` directories with their original
+#' filenames, so they remain directly readable by Seurat. V(D)J files are
+#' planned from run-level unfiltered `outs/vdj_b` and `outs/vdj_t` directories
+#' into per-sample `vdj_b` and `vdj_t` directories with the sample name
+#' prepended.
 #'
 #' @param input_dir Character scalar. Project or Cell Ranger output directory to
 #'   search.
@@ -115,9 +124,9 @@ TS_find_cellranger_samples <- function(
 #'   See [TS_find_cellranger_samples()].
 #' @param overwrite Logical. If `FALSE`, the function errors when planned target
 #'   files already exist.
-#' @param strict Logical. If `TRUE`, existing V(D)J directories must contain all
-#'   requested V(D)J files. If `FALSE`, missing V(D)J files are recorded in the
-#'   plan and available files can still be copied.
+#' @param strict Logical. If `TRUE`, existing raw V(D)J directories must contain
+#'   all requested `all_contig*` files. If `FALSE`, missing V(D)J files are
+#'   recorded in the plan and available files can still be copied.
 #' @param ... Additional arguments passed to [TS_find_cellranger_samples()], such
 #'   as `matrix_dir_names` or `vdj_dir_names`.
 #'
@@ -173,6 +182,8 @@ TS_plan_cellranger_file_collection <- function(
       call. = FALSE
     )
   }
+
+  .TS_validate_cellranger_vdj_sample_scope(samples)
 
   dest_dir <- normalizePath(dest_dir, winslash = "/", mustWork = FALSE)
 
@@ -273,9 +284,10 @@ TS_plan_cellranger_file_collection <- function(
 #'
 #' @description
 #' Copies selected Cell Ranger files into a transfer-friendly destination
-#' directory. Each sample receives its own folder, matrix filenames are kept
-#' unchanged for Seurat compatibility, and V(D)J files are renamed with the
-#' sample ID as a prefix.
+#' directory. Each sample receives its own folder. Filtered matrix filenames are
+#' kept unchanged for Seurat compatibility, and unfiltered V(D)J `all_contig*`
+#' files are renamed with the sample ID as a prefix. Per-sample V(D)J folders
+#' are intentionally not used because they contain filtered contig outputs.
 #'
 #' @param input_dir Character scalar. Project or Cell Ranger output directory to
 #'   search.
@@ -287,9 +299,9 @@ TS_plan_cellranger_file_collection <- function(
 #' @param confirm Logical. If `TRUE`, ask for confirmation before copying.
 #' @param execute Logical. If `FALSE`, return the planned copy operations without
 #'   creating directories or copying files.
-#' @param strict Logical. If `TRUE`, existing V(D)J directories must contain all
-#'   requested V(D)J files. If `FALSE`, missing V(D)J files are skipped and
-#'   recorded in the returned plan.
+#' @param strict Logical. If `TRUE`, existing raw V(D)J directories must contain
+#'   all requested `all_contig*` files. If `FALSE`, missing V(D)J files are
+#'   skipped and recorded in the returned plan.
 #' @param ... Additional arguments passed to [TS_find_cellranger_samples()], such
 #'   as `matrix_dir_names` or `vdj_dir_names`.
 #'
@@ -496,6 +508,7 @@ TS_collect_cellranger_files <- function(
     sample_index <- marker_index + 1
     sample_id <- parts[[sample_index]]
     sample_root <- .TS_path_from_parts(parts, sample_index)
+    outs_dir <- .TS_path_from_parts(parts, marker_index - 1)
     detection_note <- paste0(parts[[marker_index]], "/<sample>")
   } else {
     output_markers <- which(parts %in% c("cellranger_outs", "outs"))
@@ -505,10 +518,12 @@ TS_collect_cellranger_files <- function(
       sample_index <- output_index - 1
       sample_id <- parts[[sample_index]]
       sample_root <- .TS_path_from_parts(parts, output_index)
+      outs_dir <- sample_root
       detection_note <- paste0(parts[[output_index]], " parent directory")
     } else {
       sample_id <- basename(dirname(matrix_dir))
       sample_root <- dirname(matrix_dir)
+      outs_dir <- sample_root
       detection_note <- "matrix parent directory"
     }
   }
@@ -521,22 +536,19 @@ TS_collect_cellranger_files <- function(
   list(
     sample_id = sample_id,
     sample_root = normalizePath(sample_root, winslash = "/", mustWork = TRUE),
+    outs_dir = normalizePath(outs_dir, winslash = "/", mustWork = TRUE),
     detection_note = detection_note
   )
 }
 
-.TS_find_vdj_dirs <- function(sample_root, vdj_dir_names) {
-  if (!dir.exists(sample_root)) {
+.TS_find_raw_vdj_dirs <- function(outs_dir, vdj_dir_names) {
+  if (!dir.exists(outs_dir)) {
     return(character())
   }
 
-  direct <- file.path(sample_root, vdj_dir_names)
+  direct <- file.path(outs_dir, vdj_dir_names)
   direct <- direct[dir.exists(direct)]
-
-  nested <- .TS_list_dirs(sample_root)
-  nested <- nested[basename(nested) %in% vdj_dir_names]
-
-  unique(normalizePath(c(direct, nested), winslash = "/", mustWork = TRUE))
+  unique(normalizePath(direct, winslash = "/", mustWork = TRUE))
 }
 
 .TS_first_or_na <- function(x) {
@@ -560,6 +572,48 @@ TS_collect_cellranger_files <- function(
       call. = FALSE
     )
   }
+}
+
+.TS_validate_cellranger_vdj_sample_scope <- function(samples) {
+  samples_with_vdj <- dplyr::filter(
+    samples,
+    !is.na(.data$vdj_b_dir) | !is.na(.data$vdj_t_dir)
+  )
+
+  if (nrow(samples_with_vdj) == 0) {
+    return(invisible(samples))
+  }
+
+  outs_counts <- dplyr::summarise(
+    dplyr::group_by(samples_with_vdj, .data$outs_dir),
+    n = dplyr::n_distinct(.data$sample_id),
+    .groups = "drop"
+  )
+  multi_sample_outs <- dplyr::filter(outs_counts, .data$n > 1)
+
+  if (nrow(multi_sample_outs) == 0) {
+    return(invisible(samples))
+  }
+
+  affected_samples <- dplyr::filter(
+    samples_with_vdj,
+    .data$outs_dir %in% multi_sample_outs$outs_dir
+  )
+
+  stop(
+    "Raw V(D)J all_contig files are run-level outputs, not sample-level outputs. ",
+    "Multiple samples were detected under the same outs directory, so these ",
+    "raw V(D)J files will not be copied into per-sample folders automatically:\n",
+    paste(
+      paste0(
+        affected_samples$outs_dir,
+        " -> ",
+        affected_samples$sample_id
+      ),
+      collapse = "\n"
+    ),
+    call. = FALSE
+  )
 }
 
 .TS_plan_one_cellranger_sample <- function(
