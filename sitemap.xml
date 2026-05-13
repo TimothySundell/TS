@@ -24,6 +24,7 @@
 <url><loc>https://timothysundell.github.io/TS/reference/TS_add_sig_segments_and_labels.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_calculate_ratios.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_cellnumbers_per_PC_and_resolution.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/TS_collect_cellranger_files.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_compute_pairwise_fisher.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_dataframe_to_fasta.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_export_cluster_ids.html</loc></url>
@@ -32,7 +33,9 @@
 <url><loc>https://timothysundell.github.io/TS/reference/TS_extract_ig_ranks_per_PC.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_extract_ranked_genes_per_PC.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_featureplots.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/TS_find_cellranger_samples.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_format_IMGT_to_cellranger.html</loc></url>
+<url><loc>https://timothysundell.github.io/TS/reference/TS_plan_cellranger_file_collection.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_plot_3D.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_plot_IG_usage.html</loc></url>
 <url><loc>https://timothysundell.github.io/TS/reference/TS_plot_IG_usage_legacy.html</loc></url>

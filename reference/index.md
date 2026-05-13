@@ -48,6 +48,8 @@
 - [`TS_cellnumbers_per_PC_and_resolution()`](https://timothysundell.github.io/TS/reference/TS_cellnumbers_per_PC_and_resolution.md)
   : Calculate cellnumbers per cluster for each combination of 'number or
   PCs' and 'resolution'
+- [`TS_collect_cellranger_files()`](https://timothysundell.github.io/TS/reference/TS_collect_cellranger_files.md)
+  : Collect selected Cell Ranger files into per-sample folders
 - [`TS_compute_pairwise_fisher()`](https://timothysundell.github.io/TS/reference/TS_compute_pairwise_fisher.md)
   : Compute pairwise Fisher tests for gene usage
 - [`TS_dataframe_to_fasta()`](https://timothysundell.github.io/TS/reference/TS_dataframe_to_fasta.md)
@@ -66,8 +68,12 @@
   50 principal components
 - [`TS_featureplots()`](https://timothysundell.github.io/TS/reference/TS_featureplots.md)
   : Output one or multiple featureplots
+- [`TS_find_cellranger_samples()`](https://timothysundell.github.io/TS/reference/TS_find_cellranger_samples.md)
+  : Find sample-level Cell Ranger output folders
 - [`TS_format_IMGT_to_cellranger()`](https://timothysundell.github.io/TS/reference/TS_format_IMGT_to_cellranger.md)
   : Convert IMGT VDJ data to Cell Ranger–like format
+- [`TS_plan_cellranger_file_collection()`](https://timothysundell.github.io/TS/reference/TS_plan_cellranger_file_collection.md)
+  : Plan collection of selected Cell Ranger files
 - [`TS_plot_3D()`](https://timothysundell.github.io/TS/reference/TS_plot_3D.md)
   : Plot your Seurat object in 3D.
 - [`TS_plot_IG_usage()`](https://timothysundell.github.io/TS/reference/TS_plot_IG_usage.md)
