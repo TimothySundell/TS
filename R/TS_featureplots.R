@@ -53,6 +53,10 @@ TS_featureplots <- function(
     library(Seurat)
   }
 
+  if (length(expression_cols) < 2) {
+    stop("expression_cols must contain at least two colours.")
+  }
+
   Seurat::DefaultAssay(seurat_object) <- assay
 
   # Validate features
@@ -100,12 +104,18 @@ TS_featureplots <- function(
     p <- Seurat::FeaturePlot(
       object = seurat_object,
       features = gene,
-      cols = expression_cols,
+      cols = expression_cols[c(1, length(expression_cols))],
       pt.size = pt.size,
       order = order,
+      min.cutoff = 0,
       reduction = reduction,
+      keep.scale = NULL,
       combine = TRUE
     ) +
+      ggplot2::scale_colour_gradientn(
+        colours = expression_cols,
+        limits = c(0, NA)
+      ) +
       Seurat::NoAxes()
     if (reverse_y_scale) {
       p <- p + ggplot2::scale_y_reverse()
