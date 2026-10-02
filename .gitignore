@@ -60,3 +60,6 @@ docs
 ./R/.DS_Store
 >>>>>>> 60570e1 (Initial commit)
 .positai
+
+# Custom files
+backlog.md
