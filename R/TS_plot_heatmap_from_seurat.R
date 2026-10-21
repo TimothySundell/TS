@@ -5,6 +5,7 @@
 #' cell-level expression values or averaged expression per group.
 #' Columns can be grouped by `Seurat::Idents()` or by any metadata column,
 #' and cell-level heatmaps can optionally be ordered by pseudotime.
+#' Only requested features are scaled; a stored `scale.data` layer is not required.
 #'
 #' @param seurat_object A Seurat object containing the expression data to plot.
 #' @param features Character vector of genes/features to include in the heatmap.
@@ -12,11 +13,15 @@
 #' @param plot_average_expression Logical. If `TRUE`, plots average expression per group.
 #' If `FALSE`, plots cell-level expression.
 #' @param assay Character string. Assay to use. Defaults to `"RNA"`.
-#' @param layer Character string. Layer to pull expression values from.
-#' This is passed on to Seurat functions directly.
+#' @param layer Character string. Must be `"data"` (the default), containing
+#' log-normalized expression values.
 #' @param scale_rows Logical. Whether to z-score scale each feature across columns
-#' before plotting. Defaults to `FALSE`. If you want pre-scaled values, you can
-#' instead use `layer = "scale.data"`.
+#' before plotting. Defaults to `TRUE`. Cell-level values are scaled across cells.
+#' For average-expression plots, values are first averaged in linear space within
+#' each group, transformed with `log1p()`, and then scaled across groups, giving
+#' each group equal weight. Scaling uses `Seurat::ScaleData()` with its default
+#' upper cap of 10. Constant features (including a single-group average) become
+#' zero. Set to `FALSE` to plot log-normalized values without scaling.
 #' @param group_by Character string. Grouping variable for columns. Use `"ident"`
 #' to group by `Seurat::Idents()`, or provide a metadata column name.
 #' @param group_levels Optional character vector specifying the order of groups in the heatmap.
@@ -99,8 +104,8 @@ TS_plot_heatmap_from_seuratobject = function(
   features,
   plot_average_expression = FALSE,
   assay = "RNA",
-  layer = "scale.data",
-  scale_rows = FALSE,
+  layer = "data",
+  scale_rows = TRUE,
   group_by = "ident",
   group_levels = NULL,
   pseudotime_var = "pseudotime",
@@ -136,6 +141,10 @@ TS_plot_heatmap_from_seuratobject = function(
   library(grid)
 
   original_features <- features
+
+  if (!identical(layer, "data")) {
+    stop("`layer` must be \"data\"; selected features are now scaled during plotting.")
+  }
 
   if (!assay %in% Seurat::Assays(seurat_object)) {
     stop(
@@ -382,17 +391,27 @@ TS_plot_heatmap_from_seuratobject = function(
       group.by = group_by
     )[[assay]]
 
-    expression_mat <- base::as.matrix(expression_mat)
+    # AverageExpression(data) averages in linear space; restore log expression
+    # before scaling across groups, rather than scaling individual cells first.
+    expression_mat <- log1p(base::as.matrix(expression_mat))
+    expression_mat <- expression_mat[features_present, , drop = FALSE]
+
+    # Seurat drops the column name when all cells belong to a single group.
+    if (ncol(expression_mat) == 1L && is.null(colnames(expression_mat))) {
+      group_values <- if (identical(group_by, "ident")) {
+        Seurat::Idents(seurat_object)
+      } else {
+        seurat_object[[]][[group_by]]
+      }
+      colnames(expression_mat) <- unique(as.character(group_values[!is.na(group_values)]))
+    }
 
     present_levels <- grouping_levels[grouping_levels %in% colnames(expression_mat)]
     remaining_levels <- setdiff(colnames(expression_mat), present_levels)
     expression_mat <- expression_mat[, c(present_levels, remaining_levels), drop = FALSE]
 
     if (isTRUE(scale_rows)) {
-      expression_mat <- expression_mat |>
-        base::t() |>
-        base::scale() |>
-        base::t()
+      expression_mat <- Seurat::ScaleData(expression_mat, verbose = FALSE)
     }
 
     group_levels <- colnames(expression_mat)
@@ -446,7 +465,10 @@ TS_plot_heatmap_from_seuratobject = function(
     }
 
     if (isTRUE(scale_rows)) {
-      expression_mat <- base::scale(expression_mat)
+      expression_mat <- base::t(Seurat::ScaleData(
+        base::t(expression_mat),
+        verbose = FALSE
+      ))
     }
 
     expression_mat <- base::t(expression_mat)
@@ -473,7 +495,7 @@ TS_plot_heatmap_from_seuratobject = function(
   group_levels <- levels(column_groups)
   group_colors <- make_group_colors(group_levels, group_bar_fill_colors)
 
-  is_scaled_matrix <- isTRUE(scale_rows) || identical(layer, "scale.data")
+  is_scaled_matrix <- isTRUE(scale_rows)
 
   if (is.null(colors)) {
     colors <- if (is_scaled_matrix) {

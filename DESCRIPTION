@@ -10,7 +10,10 @@ URL: https://timothysundell.github.io/TS/
 Depends: 
     R (>= 2.10)
 Imports: 
+    circlize,
+    cli,
     clustree,
+    ComplexHeatmap,
     dplyr,
     enrichR,
     fastcluster,
