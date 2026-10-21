@@ -157,6 +157,8 @@ Repo activity
   : Plot counts for a gene in a Seurat object as violinplot
 - [`TS_plot_enrichR()`](https://timothysundell.github.io/TS/reference/TS_plot_enrichR.md)
   : Plot the output from TS_run_enrichR
+- [`TS_plot_heatmap_from_seuratobject()`](https://timothysundell.github.io/TS/reference/TS_plot_heatmap_from_seuratobject.md)
+  : Plot a heatmap from a Seurat object
 - [`TS_project_scRNAseq_dataset()`](https://timothysundell.github.io/TS/reference/TS_project_scRNAseq_dataset.md)
   : Projects one Seurat object onto another
 - [`TS_project_scRNAseq_dataset_export_query()`](https://timothysundell.github.io/TS/reference/TS_project_scRNAseq_dataset_export_query.md)
